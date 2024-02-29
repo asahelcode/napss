@@ -1,5 +1,7 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Line from '../../assets/line.svg'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 const HomePage = () => {
 	return (
@@ -155,6 +157,10 @@ const HomePage = () => {
 					</tr>
 				</tbody>
 			</table>
+			<div className="flex justify-end space-x-4 max-w-screen-lg mx-auto">
+				<KeyboardArrowLeftIcon className="border border-black rounded-full "/>
+				<KeyboardArrowRightIcon className="border text-[#2CC84A] border-[#2CC84A] rounded-full"/>
+			</div>
 		</>
 	)
 }

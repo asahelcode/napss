@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import HomePage from '../pages/Home/index'
 import RootLayout from '@/layout/RootLayout'
+import RepresentativePage from '@/pages/Representative'
+import ExecutiveDetail from '@/pages/ExecutivesDetail'
 
 const router = createBrowserRouter([
 	{
@@ -10,6 +12,14 @@ const router = createBrowserRouter([
 			{
 				path: '/',
 				Component: HomePage
+			},
+			{
+				path: '/representatives',
+				Component: RepresentativePage
+			},
+			{
+				path: '/executives/detail',
+				Component: ExecutiveDetail
 			}
 		]
 	}
