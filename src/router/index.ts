@@ -3,6 +3,7 @@ import HomePage from '../pages/Home/index'
 import RootLayout from '@/layout/RootLayout'
 import RepresentativePage from '@/pages/Representative'
 import ExecutiveDetail from '@/pages/ExecutivesDetail'
+import Accomplishment from '@/pages/Accomplishment'
 
 const router = createBrowserRouter([
 	{
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
 			{
 				path: '/executives/detail',
 				Component: ExecutiveDetail
+			},
+			{
+				path: '/department/accomplishment',
+				Component: Accomplishment
 			}
 		]
 	}
