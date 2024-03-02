@@ -9,6 +9,8 @@ import {
 import { useFilter } from '@/store';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { GET_SESSIONS } from '@/graphql/queries/officials';
 
 const Header = () => {
   const [search, setSearch] = useState('')
@@ -17,6 +19,7 @@ const Header = () => {
   const storeHierarchy = useFilter((state) => state.storeHierarchy)
   const storeSession = useFilter((state) => state.storeSession)
   const storeSearchTerm = useFilter((state) => state.storeSearchTerm)
+  const { data: sessions } = useQuery(GET_SESSIONS)
 
   useEffect(() => {
     if(hierarchy) {
@@ -25,6 +28,11 @@ const Header = () => {
 
     if(session) {
       storeSession(session)
+    }
+
+    if(session === 'session') {
+      setSession('')
+      storeSession('')
     }
 
     // if(search) {
@@ -52,15 +60,18 @@ const Header = () => {
                <SelectValue placeholder="Session" />
              </SelectTrigger>
              <SelectContent>
-               <SelectItem value="2024/2023">2024/2023</SelectItem>
-               <SelectItem value="2023/2022">2023/2022</SelectItem>
-               <SelectItem value="2022/2021z">2022/2021</SelectItem>
+               <SelectItem value="session">Session</SelectItem>
+               {
+                sessions?.sessions?.map((session) => (
+                  <SelectItem value={session?.id}>{session?.session}</SelectItem>
+                ))
+               }
              </SelectContent>
           </Select>
-          <div className="relative">
+          {/* <div className="relative">
         <input type="text" placeholder="Search by name" className="p-2 pl-12 outline-none rounded-md" value={search} onChange={(e) => setSearch(e.target.value)} />
         <SearchOutlinedIcon className="absolute left-4 text-gray-400 top-[10px]" fontSize="small"/>
-          </div>
+          </div> */}
         <button className="p-2 px-6 text-white shadow-sm font-bold shadow-[#2CC84A] rounded-lg  bg-[#2CC84A]">
           Home
         </button>

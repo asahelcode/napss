@@ -1,13 +1,27 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import { useFetchExecutives, useSetOfficials } from '@/store'
+import { useQuery } from '@apollo/client'
+import { SELECTED_FACULTY_EXECUTIVE_MEMBERS } from '@/graphql/queries/officials'
+import { useNavigate } from 'react-router-dom'
 
 const ExecutiveDetail = () => {
+  const sessionId = useFetchExecutives(state => state.sessionId)
+  const level = useFetchExecutives(state => state.level)
+  const { data } = useQuery(SELECTED_FACULTY_EXECUTIVE_MEMBERS, { variables: { sessionId }})
+  const navigate = useNavigate()
+  const defaultOfficials = useSetOfficials(state => state.defaultOfficials)
+
+
+  console.log(defaultOfficials)
   return (
     <>
       <div className="w-full p-7 bg-white flex justify-between items-center px-10">
         <div className=" flex items-center space-x-4">
+          <button onClick={() => navigate('/')}>
           <KeyboardBackspaceIcon className="text-[#2CC84A] border-2 border-[#2CC84A] p-1 rounded-full" fontSize="large"/>
+            </button>
           <span className="text-2xl font-bold pl-5">Department of Computer Science Executives</span>
         </div>
         <div className="flex space-x-10 items-center">

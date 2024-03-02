@@ -1,8 +1,28 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Line from '../../assets/line.svg'
+import { useFetchExecutives } from '@/store'
+import { useNavigate } from 'react-router-dom'
 
 
 const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, session}) => {
+	const setSessionId = useFetchExecutives(state => state.setSessionId)
+	const setLevel = useFetchExecutives(state => state.setLevel)
+
+	const navigate = useNavigate()
+
+	const displayFaculty = (sessionId) => {
+		setSessionId(sessionId)
+		setLevel('FACULTY')
+		navigate('/executives/detail')
+	}
+
+	// console.log(departmentPresident)
+
+	const displayDepartment = (sessionId, departmentId) => {
+		console.log(sessionId)
+		console.log('&&&', departmentId)
+	}
+	
   return (
     <>
       <tr className="flex justify-around items-center">
@@ -13,7 +33,7 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 												<div className="">
 													<span className="text-lg font-medium">{facultyPresident?.studentName}</span>
 													<div>
-														<span className="text-gray-500">{facultyPresident?.position?.position}</span>
+														<span className="text-gray-500">Faculty {facultyPresident?.position?.position}</span>
 													</div>
 												</div>
 											</td>
@@ -23,7 +43,11 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 											Accomplishment</button>
 											</td>
 											<td>Active</td>
-											<td><ArrowRightAltIcon className="text-[#2CC84A]"/></td>
+											<td>
+												<button onClick={() => displayFaculty(session?.id)}>
+												<ArrowRightAltIcon className="text-[#2CC84A]"/>
+													</button>
+												</td>
 										</tr>
 										<img src={Line} alt="" className="absolute left-[70px] top-[90px] w-16 h-14"/>
 									<tr className="flex justify-around items-center pl-12">
@@ -46,7 +70,11 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 									</button>
 										</td>
 										<td>Active</td>
-										<td><ArrowRightAltIcon className="text-[#2CC84A]"/></td>
+										<td>
+											<button onClick={() => displayDepartment(session?.id, departmentPresident?.department?.id)}>
+											<ArrowRightAltIcon className="text-[#2CC84A]"/>
+												</button>
+											</td>
 									</tr>
     </>
     

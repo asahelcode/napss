@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-export const useFilter = create((set) => ({
+const useFilter = create((set) => ({
   hierarchy: 'None',
   session: '',
   searchTerm: '',
@@ -8,3 +8,23 @@ export const useFilter = create((set) => ({
   storeSession: (value) => set({ session: value }),
   storeSearchTerm: (value) => set({ sessionStorage: value })
 }));
+
+const useFetchExecutives = create((set) => ({
+  departmentId: '',
+  sessionId: '',
+  level: '',
+  setDepartmentId: (value) => set({ departmentId: value }),
+  setSessionId: (value) => set({ sessionId : value }),
+  setLevel: (value) => set({ level: value })
+}))
+
+const useSetOfficials = create((set) => ({
+  defaultOfficials: [],
+  departmentOfficials: [],
+  facultyOfficials: [],
+  setDefaultOfficials: (value) => set({ defaultOfficials: value }),
+  setDepartmentOfficials: (value) => set({ departmentOfficials: value }),
+  setFacultyOfficials: (value) => set({ facultyOfficials: value})
+}))
+
+export { useFilter, useFetchExecutives, useSetOfficials }

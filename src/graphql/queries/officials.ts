@@ -1,13 +1,24 @@
 import { gql } from '@apollo/client'
 
+const GET_SESSIONS = gql`
+  query {
+  sessions {
+    id
+    session
+  }
+}
+`
+
 const GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION = gql`
   query {
     sessionFacultyAndDeptPresident {
+      id
       session
       history {
         studentName
         studentImage
         department {
+          id
           name
         }
         position {
@@ -21,11 +32,13 @@ const GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION = gql`
 const GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   query {
   sessionFacultyPresidentAndVice {
+    id
     session
     history {
       studentName
       studentImage
       department {
+        id
         name
       }
       position {
@@ -40,11 +53,13 @@ const GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
 const GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   query {
     sessionDepartmentPresidentAndVice {
+      id
     session
     history {
       studentName
       studentImage
       department {
+        id
         name
       }
       position {
@@ -55,4 +70,82 @@ const GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   }
 `
 
-export {GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION}
+const FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE = gql`
+  query($sessionId: String!) {
+  getSessionFacultyAndDeptPresident(sessionId: $sessionId) {
+    id
+    session
+    history {
+      studentName
+      studentImage
+      department {
+        id
+        name
+      }
+      position {
+        position
+      }
+      level
+    }
+  }
+}
+`
+
+const FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE = gql`
+  query($sessionId: String!) {
+  getSessionFacultyPresidentAndVice(sessionId: $sessionId) {
+    id
+    session
+    history {
+      studentName
+      studentImage
+      department {
+        id
+        name
+      }
+      position {
+        position
+      }
+      level
+    }
+  }
+}
+`
+
+const FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE = gql`
+  query($sessionId: String!) {
+  getSessionDepartmentPresidentAndVice(sessionId: $sessionId) {
+    id
+    session
+    history {
+      studentName
+      studentImage
+      department {
+        id
+        name
+      }
+      position {
+        position
+      }
+    }
+  }
+}
+`
+
+const SELECTED_FACULTY_EXECUTIVE_MEMBERS = gql`
+  query($sessionId: String!) {
+  facultyOfficials(sessionId: $sessionId) {
+    studentName
+    studentImage
+    department {
+      id
+      name
+    }
+    position {
+      position
+    }
+  }
+}
+`
+
+export {GET_SESSIONS,GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, SELECTED_FACULTY_EXECUTIVE_MEMBERS}
