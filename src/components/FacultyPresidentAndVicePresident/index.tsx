@@ -1,8 +1,25 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Line from '../../assets/line.svg'
+import { useFetchExecutives } from '@/store'
+import { useNavigate } from 'react-router-dom'
 
 
 const FacultyPresidentAndVicePresident = ({president, vicePresident, session}) => {
+	const setSession = useFetchExecutives(state => state.setSession)
+	const setLevel = useFetchExecutives(state => state.setLevel)
+	const setLabel = useFetchExecutives(state => state.setLabel)
+	const navigate = useNavigate()
+
+	const displayFaculty = (session) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLevel('FACULTY')
+		navigate('/executives/detail')
+	}
+
   return (
     <>
 					<tr className="flex justify-around items-center">
@@ -38,7 +55,11 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}) =
             Accomplishment</button>
 						</td>
 						<td>Active</td>
-						<td><ArrowRightAltIcon className="text-[#2CC84A]"/></td>
+						<td>
+							<button onClick={() => displayFaculty(session)}>
+									<ArrowRightAltIcon className="text-[#2CC84A]"/>
+							</button>
+						</td>
 					</tr>
 					
     </>

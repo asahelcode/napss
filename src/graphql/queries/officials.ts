@@ -52,7 +52,7 @@ const GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
 
 const GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   query {
-    sessionDepartmentPresidentAndVice {
+  sessionDepartmentPresidentAndVice {
       id
     session
     history {
@@ -61,6 +61,10 @@ const GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
       department {
         id
         name
+      }
+      session {
+        id
+        session
       }
       position {
         position
@@ -148,4 +152,36 @@ const SELECTED_FACULTY_EXECUTIVE_MEMBERS = gql`
 }
 `
 
-export {GET_SESSIONS,GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, SELECTED_FACULTY_EXECUTIVE_MEMBERS}
+const SELECTED_DEPARTMENT_EXECUTIVE_MEMBERS = gql`
+  query($departmentId: String!, $sessionId: String!) {
+  departmentOfficials(departmentId: $departmentId, sessionId: $sessionId) {
+    studentName
+    studentImage
+    position {
+      position
+    }
+  }
+}
+`
+
+const GET_DEPARTMENT_ACCOMPLISHMENTS = gql`
+  query($departmentId: String!, $sessionId: String!) {
+  departmentAccomplishments(departmentId: $departmentId, sessionId: $sessionId) {
+    id
+    description
+    imageUrl
+  }
+}
+`
+
+const GET_FACULTY_ACCOMPLISHMENTS = gql`
+  query($sessionId: String!) {
+  facultyAccomplishments(sessionId: $sessionId) {
+    id
+    description
+    imageUrl
+  }
+}
+`
+
+export {GET_SESSIONS,GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, SELECTED_FACULTY_EXECUTIVE_MEMBERS, SELECTED_DEPARTMENT_EXECUTIVE_MEMBERS, GET_DEPARTMENT_ACCOMPLISHMENTS, GET_FACULTY_ACCOMPLISHMENTS}

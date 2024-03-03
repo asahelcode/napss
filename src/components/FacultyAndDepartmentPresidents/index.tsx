@@ -1,26 +1,63 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Line from '../../assets/line.svg'
-import { useFetchExecutives } from '@/store'
+import { useFetchExecutives} from '@/store'
 import { useNavigate } from 'react-router-dom'
 
 
 const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, session}) => {
-	const setSessionId = useFetchExecutives(state => state.setSessionId)
+	const setSession = useFetchExecutives(state => state.setSession)
 	const setLevel = useFetchExecutives(state => state.setLevel)
+	const setLabel = useFetchExecutives(state => state.setLabel)
+	const setDepartment = useFetchExecutives(state => state.setDepartment)
 
 	const navigate = useNavigate()
 
-	const displayFaculty = (sessionId) => {
-		setSessionId(sessionId)
+	const displayFacultyMembers = (session) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel('FACULTY OF PHYSICAL SCIENCES')
 		setLevel('FACULTY')
 		navigate('/executives/detail')
 	}
+	
+	const displayDepartmentMembers = (session, departmentId) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel(`DEPARTMENT OF ${departmentPresident?.department?.name}`)
+		setDepartment({
+			id: departmentId,
+			department: departmentPresident?.department?.name
+		})
+		setLevel('DEPARTMENT')
+		navigate('/executives/detail')
+	}
 
-	// console.log(departmentPresident)
+	const displayFacultyAccomplishment = (session) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLevel('FACULTY')
+		navigate('/department/accomplishment')
+	}
 
-	const displayDepartment = (sessionId, departmentId) => {
-		console.log(sessionId)
-		console.log('&&&', departmentId)
+	const displayDepartmentAccomplishment = (session, departmentId) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel(`DEPARTMENT OF ${departmentPresident?.department?.name}`)
+		setDepartment({
+			id: departmentId,
+			department: departmentPresident?.department?.name
+		})
+		setLevel('DEPARTMENT')
+		navigate('/department/accomplishment')	
 	}
 	
   return (
@@ -39,12 +76,13 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 											</td>
 											<td className="text-center w-[80px]">{session?.session}</td>
 											<td>
-												<button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-											Accomplishment</button>
+											<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
+												Accomplishment
+											</button>
 											</td>
 											<td>Active</td>
 											<td>
-												<button onClick={() => displayFaculty(session?.id)}>
+												<button onClick={() => displayFacultyMembers(session)}>
 												<ArrowRightAltIcon className="text-[#2CC84A]"/>
 													</button>
 												</td>
@@ -65,13 +103,13 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 										</td>
 										<td className="text-center w-[80px]">{session?.session}</td>
 										<td>
-											<button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-										Accomplishment
+											<button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment( session, departmentPresident?.department?.id)}>
+											Accomplishment
 									</button>
 										</td>
 										<td>Active</td>
 										<td>
-											<button onClick={() => displayDepartment(session?.id, departmentPresident?.department?.id)}>
+											<button onClick={() => displayDepartmentMembers(session, departmentPresident?.department?.id)}>
 											<ArrowRightAltIcon className="text-[#2CC84A]"/>
 												</button>
 											</td>

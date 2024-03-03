@@ -1,6 +1,5 @@
-
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+// import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+// import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION } from '@/graphql/queries/officials';
@@ -66,7 +65,7 @@ const HomePage = () => {
 		}else if(session !== '' && hierarchy === 'DEPARTMENT') {
 			setDepartmentOfficials(getDeptPresidentAndVice?.getSessionDepartmentPresidentAndVice)
 		}
-	}, [departmentPresidentAndVicePresident?.sessionDepartmentPresidentAndVice, getDeptPresidentAndVice?.getSessionDepartmentPresidentAndVice, hierarchy, session])
+	}, [departmentOfficials, departmentPresidentAndVicePresident?.sessionDepartmentPresidentAndVice, getDeptPresidentAndVice?.getSessionDepartmentPresidentAndVice, hierarchy, session, setDepartmentOfficials])
 
 
 	const departmentBySessionOfficials: { [key: string]: any } = {};
@@ -99,7 +98,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 				setDefaultOfficials(data?.sessionFacultyAndDeptPresident)
 			}
 		}
-	}, [data, fetchFacultyDeptPresidents, hierarchy, session])
+	}, [data, defaultOfficials, fetchFacultyDeptPresidents, hierarchy, session, setDefaultOfficials])
 
 	useEffect(() => {
 		if( hierarchy === 'FACULTY' && session === '') {
@@ -109,19 +108,16 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 			temp.push(fetchFacultyPresidentAndVice?.getSessionFacultyPresidentAndVice)
 			setFacultyOfficials(temp)
 		}
-	}, [facultyPresidentAndVicePresident?.sessionFacultyPresidentAndVice, fetchFacultyPresidentAndVice, fetchFacultyPresidentAndVice?.getSessionFacultyPresidentAndVice, hierarchy, session])
+	}, [facultyPresidentAndVicePresident?.sessionFacultyPresidentAndVice, fetchFacultyPresidentAndVice, fetchFacultyPresidentAndVice?.getSessionFacultyPresidentAndVice, hierarchy, session, setFacultyOfficials])
 
 
 	return (
 		<>
-		<div className="w-full p-7 bg-white flex justify-between items-center px-10">
+		<div className="w-full p-7 bg-white flex justify-center items-center px-10">
           <span className="text-2xl font-bold pl-5">
 						{/* {hierarchy == 'None' && "Records for Faculty of Physical Sciences"} */}
 						{hierarchy === 'None' ? "" : hierarchy } EXECUTIVES RECORD
  					</span>
-          <button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-            Accomplishment
-          </button>
 		</div>
 			<table className="w-full border-separate border-spacing-y-5 max-w-screen-lg mx-auto space-y-7">
 				<thead className="w-full">
@@ -182,9 +178,11 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
     const departments = Object.keys(departmentBySessionOfficials[session]);
     return departments?.map((department) => {
       const departmentHistory = departmentBySessionOfficials[session][department];
+
       const departmentPresident = getDepartmentPresident(departmentHistory);
       const departmentVicePresident = getDepartmentVicePresident(departmentHistory);
-
+			
+			console.log('🤣', departmentPresident)
       return (
 				<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl">
         <DepartmentPresidentAndVicePresident
@@ -192,6 +190,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
           president={departmentPresident}
           vicePresident={departmentVicePresident}
           session={session}
+					sessionId={departmentPresident?.session?.id}
         />
 				</tbody>
       )
@@ -202,10 +201,10 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 					}
 
 			</table>
-			<div className="flex justify-end space-x-4 max-w-screen-lg mx-auto">
+			{/* <div className="flex justify-end space-x-4 max-w-screen-lg mx-auto">
 				<KeyboardArrowLeftIcon className="border border-black rounded-full "/>
 				<KeyboardArrowRightIcon className="border text-[#2CC84A] border-[#2CC84A] rounded-full"/>
-			</div>
+			</div> */}
 		</>
 	)
 }

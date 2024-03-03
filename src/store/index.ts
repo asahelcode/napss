@@ -10,12 +10,14 @@ const useFilter = create((set) => ({
 }));
 
 const useFetchExecutives = create((set) => ({
-  departmentId: '',
-  sessionId: '',
+  department: { id: '', department: ''},
+  session: {id: '', session: ''},
   level: '',
-  setDepartmentId: (value) => set({ departmentId: value }),
-  setSessionId: (value) => set({ sessionId : value }),
-  setLevel: (value) => set({ level: value })
+  label: '',
+  setDepartment: (value) => set({ department: value }),
+  setLevel: (value) => set({ level: value }),
+  setLabel: (value) => set({ label: value }),
+  setSession: (value) => set({ session: value })
 }))
 
 const useSetOfficials = create((set) => ({
@@ -26,5 +28,14 @@ const useSetOfficials = create((set) => ({
   setDepartmentOfficials: (value) => set({ departmentOfficials: value }),
   setFacultyOfficials: (value) => set({ facultyOfficials: value})
 }))
+
+// const useSetAccomplishment = create((set) => ({
+//   department: { id: '', department: '' },
+//   session: { id: '', session: '' },
+//   level: '',
+//   setDepartment: (value) => set({ department: value }),
+//   setSession: (value) => set({ session: value }),
+//   level: (value) => set({ level: value })
+// }))
 
 export { useFilter, useFetchExecutives, useSetOfficials }
