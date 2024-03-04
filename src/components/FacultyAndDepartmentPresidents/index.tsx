@@ -2,6 +2,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import Line from '../../assets/line.svg'
 import { useFetchExecutives} from '@/store'
 import { useNavigate } from 'react-router-dom'
+import useMedia from '@/hook/useMedia'
 
 
 const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, session}) => {
@@ -9,6 +10,7 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 	const setLevel = useFetchExecutives(state => state.setLevel)
 	const setLabel = useFetchExecutives(state => state.setLabel)
 	const setDepartment = useFetchExecutives(state => state.setDepartment)
+	const isSmallScreen = useMedia('(max-width: 600px)');
 
 	const navigate = useNavigate()
 
@@ -62,22 +64,21 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 	
   return (
     <>
-      <tr className="flex justify-around items-center">
-											<td className="flex space-x-2 items-center z-20  w-[300px] ">
+      <tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2">
+											<td className="flex lg:flex-row space-x-2  lg:items-center z-20 w-[170px] items-center  lg:w-[300px] ">
 												<div className="p-1 border border-[#2CC84A] rounded-full">
-												<img src={facultyPresident?.studentImage} alt="" className="w-16  h-16 object-fill rounded-full"/>
+												<img src={facultyPresident?.studentImage} alt="" className="lg:w-16 lg:h-16 w-10 h-10 object-fill rounded-full"/>
 												</div>
-												<div className="">
-													<span className="text-lg font-medium">{facultyPresident?.studentName}</span>
-													<div>
-														<span className="text-gray-500">Faculty {facultyPresident?.position?.position}</span>
-													</div>
+												<div className="flex flex-col space-y-1">
+													<span className="lg:text-lg text-xs font-extrabold">{facultyPresident?.studentName}</span>
+														<span className="text-gray-500 text-xs font-semibold">Faculty {facultyPresident?.position?.position}</span>
 												</div>
 											</td>
-											<td className="text-center w-[80px]">{session?.session}</td>
+											<td className="text-center lg:w-[80px] lg:text-sm lg:font-medium  hidden lg:flex text-xs">{session?.session}</td>
 											<td>
-											<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-												Accomplishment
+											<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+							p-1 rounded-md lg:px-4 font-medium shadow-md">
+												{isSmallScreen ? 'feat' : 'Accomplishment'}
 											</button>
 											</td>
 											<td>Active</td>
@@ -87,25 +88,27 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 													</button>
 												</td>
 										</tr>
-										<img src={Line} alt="" className="absolute left-[70px] top-[90px] w-16 h-14"/>
-									<tr className="flex justify-around items-center pl-12">
-										<td className="flex space-x-2 w-[250px] ">
+										<img src={Line} alt="" className="absolute lg:left-[65px] lg:top-[75px] lg:w-16 lg:h-14 w-14 top-[4rem] h-12 lg:flex"/>
+									<tr className="flex justify-around items-center lg:pl-12 pl-6">
+										<td className="flex space-x-2 lg:w-[250px] w-[150px] lg:flex-row items-start">
 											<div className="p-1 border border-[#2CC84A] rounded-full">
-											<img src={departmentPresident?.studentImage} alt="" className="w-16  h-16 object-fill rounded-full"/>
+											<img src={departmentPresident?.studentImage} alt="" className="lg:w-16 lg:h-16 w-8 h-8 object-fill rounded-full"/>
 											</div>
-											<div className="">
-												<span className="text-lg font-medium">{departmentPresident?.studentName}</span>
-												<div className="flex flex-col text-gray-500">
-													<span className="">{departmentPresident?.position?.position}</span>
-													<span className="text-xs font-medium">{departmentPresident?.department?.name}</span>
+											<div className="lg:w-[120px]">
+												<span className="lg:text-[13px] text-xs  lg:font-bold font-extrabold">{departmentPresident?.studentName}</span>
+												<div className="flex flex-col text-gray-500 font-medium">
+													<span className="hidden lg:flex lg:text-sm">{departmentPresident?.position?.position}</span>
+													<span className="text-xs lg:text-sm">{departmentPresident?.department?.name}</span>
 												</div>
 											</div>
 										</td>
-										<td className="text-center w-[80px]">{session?.session}</td>
+										<td className="text-center lg:w-[80px] lg:text-sm lg:font-medium  hidden lg:flex text-xs">{session?.session}</td>
 										<td>
-											<button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment( session, departmentPresident?.department?.id)}>
-											Accomplishment
+											<button className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+							p-1 rounded-md lg:px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment( session, departmentPresident?.department?.id)}>
+												{isSmallScreen ? 'feat' : 'Accomplishment'}
 									</button>
+								
 										</td>
 										<td>Active</td>
 										<td>

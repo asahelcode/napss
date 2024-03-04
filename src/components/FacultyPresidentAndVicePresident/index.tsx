@@ -10,7 +10,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}) =
 	const setLabel = useFetchExecutives(state => state.setLabel)
 	const navigate = useNavigate()
 
-	const displayFaculty = (session) => {
+	const displayFacultyMembers = (session) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -18,6 +18,16 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}) =
 		setLabel('FACULTY OF PHYSICAL SCIENCES')
 		setLevel('FACULTY')
 		navigate('/executives/detail')
+	}
+
+	const displayFacultyAccomplishment = (session) => {
+		setSession({
+			id: session?.id,
+			session: session?.session
+		})
+		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLevel('FACULTY')
+		navigate('/department/accomplishment')
 	}
 
   return (
@@ -51,12 +61,13 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}) =
 						</td>
 						<td className="text-center w-[80px]">{session?.session}</td>
 						<td>
-							<button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-            Accomplishment</button>
+							<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
+												Accomplishment
+							</button>
 						</td>
 						<td>Active</td>
 						<td>
-							<button onClick={() => displayFaculty(session)}>
+							<button onClick={() => displayFacultyMembers(session)}>
 									<ArrowRightAltIcon className="text-[#2CC84A]"/>
 							</button>
 						</td>

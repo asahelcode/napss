@@ -6,7 +6,7 @@ const useFilter = create((set) => ({
   searchTerm: '',
   storeHierarchy: (value) => set({ hierarchy: value }),
   storeSession: (value) => set({ session: value }),
-  storeSearchTerm: (value) => set({ sessionStorage: value })
+  storeSearchTerm: (value) => set({ searchTerm : value })
 }));
 
 const useFetchExecutives = create((set) => ({

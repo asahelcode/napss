@@ -113,20 +113,20 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 
 	return (
 		<>
-		<div className="w-full p-7 bg-white flex justify-center items-center px-10">
-          <span className="text-2xl font-bold pl-5">
+		<div className="w-full p-7 bg-white flex justify-center text-center items-center px-10">
+          <span className="lg:text-2xl text-xl font-bold pl-5">
 						{/* {hierarchy == 'None' && "Records for Faculty of Physical Sciences"} */}
 						{hierarchy === 'None' ? "" : hierarchy } EXECUTIVES RECORD
  					</span>
 		</div>
-			<table className="w-full border-separate border-spacing-y-5 max-w-screen-lg mx-auto space-y-7">
-				<thead className="w-full">
-					<tr className="text-[#2CC84A] flex justify-around w-full">
-						<td className="w-[320px]">Name and Position</td>
-						<td className="w-[120px]">Session</td>
-						<td className="w-[100px]">Record</td>
-						<td className="">Status</td>
-						<td className="">More</td>
+			<table className="w-full border-separate border-spacing-y-3 pt-7 lg:max-w-screen-lg px-4 max-w-screen-md mx-auto space-y-7">
+				<thead className="lg:w-full  lg:flex">
+					<tr className="text-[#2CC84A] flex lg:justify-around justify-around lg:w-full space-x-3 px-2 lg:px-0">
+						<td className="lg:w-[320px] w-[50%] text-sm ">Executive</td>
+						<td className="lg:w-[120px] text-sm hidden lg:flex">Session</td>
+						<td className="lg:w-[100px] text-sm ">Record</td>
+						<td className=" text-sm ">Status</td>
+						<td className=" text-sm ">More</td>
 					</tr>
 				</thead>
 					{
@@ -142,7 +142,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 							if(session?.history.length > 0) {
 								return (
 									<>
-									<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl">
+									<tbody className="w-full bg-white flex lg:p-5 p-2 py-8 flex-col space-y-5 relative rounded-xl">
 										<FacultyAndDepartmentPresidents facultyPresident={facultyPresident} departmentPresident={departmentPresident} session={session}/>
 										</tbody>
 									</>

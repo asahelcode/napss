@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import HomePage from '../pages/Home/index'
 import RootLayout from '@/layout/RootLayout'
-import RepresentativePage from '@/pages/Representative'
+import SearchPage from '@/pages/SearchPage'
 import ExecutiveDetail from '@/pages/ExecutivesDetail'
 import Accomplishment from '@/pages/Accomplishment'
 
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
 				Component: HomePage
 			},
 			{
-				path: '/representatives',
-				Component: RepresentativePage
+				path: '/search',
+				Component: SearchPage
 			},
 			{
 				path: '/executives/detail',
