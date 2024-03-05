@@ -110,6 +110,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 		}
 	}, [facultyPresidentAndVicePresident?.sessionFacultyPresidentAndVice, fetchFacultyPresidentAndVice, fetchFacultyPresidentAndVice?.getSessionFacultyPresidentAndVice, hierarchy, session, setFacultyOfficials])
 
+	console.log('🙃', data)
 
 	return (
 		<>
@@ -182,7 +183,6 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
       const departmentPresident = getDepartmentPresident(departmentHistory);
       const departmentVicePresident = getDepartmentVicePresident(departmentHistory);
 			
-			console.log('🤣', departmentPresident)
       return (
 				<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl">
         <DepartmentPresidentAndVicePresident
@@ -201,10 +201,6 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 					}
 
 			</table>
-			{/* <div className="flex justify-end space-x-4 max-w-screen-lg mx-auto">
-				<KeyboardArrowLeftIcon className="border border-black rounded-full "/>
-				<KeyboardArrowRightIcon className="border text-[#2CC84A] border-[#2CC84A] rounded-full"/>
-			</div> */}
 		</>
 	)
 }

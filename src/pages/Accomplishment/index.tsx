@@ -9,12 +9,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import useMedia from '@/hook/useMedia'
 const Accomplishment = () => {
   const session = useFetchExecutives(state => state.session)
   const department = useFetchExecutives(state => state.department)
   const level = useFetchExecutives(state => state.level)
   const label = useFetchExecutives(state => state.label)
+  const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
   const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data) => {
       if (level === 'DEPARTMENT') {
@@ -27,7 +28,6 @@ const Accomplishment = () => {
       }
     }})
   const [description, setDescription] = useState('')
-  
   const navigate = useNavigate()
 
   const settings = {
@@ -36,8 +36,8 @@ const Accomplishment = () => {
     infinite: true,
     touchMove: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 2
+    slidesToShow: isSmallScreen ? 1 : 3,
+    slidesToScroll: isSmallScreen ? 1 : 2
   };
 
   const style = {
@@ -45,8 +45,8 @@ const Accomplishment = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
-    height: 400,
+    width: isSmallScreen ? '80%' : 500,
+    height: isSmallScreen ? '50%' : 400,
     bgcolor: 'background.paper',
     boxShadow: 40,
     borderRadius: 5,
@@ -67,18 +67,18 @@ const Accomplishment = () => {
 
   return (
     <div className="flex flex-col space-y-10">
-      <div className="w-full p-7 bg-white flex justify-between items-center px-10">
-        <div className=" flex items-center space-x-4">
+      <div className="w-full p-7 bg-white flex justify-between items-center px-5 lg:px-10">
+        <div className=" flex items-center lg:space-x-4 space-x-2">
           <button onClick={() => navigate(-1)}>
-            <KeyboardBackspaceIcon className="text-[#2CC84A] border-2 border-[#2CC84A] p-1 rounded-full" fontSize="large"/>
+             <KeyboardBackspaceIcon className="text-[#2CC84A] border-2 border-[#2CC84A] p-1 rounded-full" fontSize={`${isSmallScreen ? "medium" : "large"}`}/>
           </button>
-          <span className="text-2xl font-bold pl-5">{label} Accomplishment</span>
+          <span className="lg:text-2xl text-sm font-bold pl-5">{label} Accomplishment</span>
         </div>
-        <div className="flex space-x-10 items-center">
-          <span className="font-bold text-lg">{session?.session}</span>
+        <div className="flex lg:space-x-10 items-center w-32">
+          <span className="font-bold text-sm lg:text-lg">{session?.session}</span>
         </div>
 		  </div>
-      <div className="w-full h-fit bg-white flex p-10 flex-col space-y-5 pl-20" >
+      <div className="w-full h-fit bg-white flex lg:p-10 flex-col space-y-5 lg:pl-20" >
         <div className="p-5">
         <Slider {...settings}>
           {
