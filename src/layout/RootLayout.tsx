@@ -9,8 +9,7 @@ const RootLayout = () => {
         <Header />
       <Outlet />
       <div className="w-full p-10 mt-10 bg-white flex justify-between items-center"></div>
-			<div className="flex justify-center items-center p-10">Copyright of the Faculty of Physical Sciences</div>
-
+			<div className="flex  text-center justify-center items-center p-10">Copyright of the Faculty of Physical Sciences</div>
       </div>
       </div>
   )

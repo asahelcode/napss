@@ -5,7 +5,9 @@ import { useQuery } from '@apollo/client'
 import { SEARCH_OFFICIAL } from '@/graphql/queries/officials';
 import { useNavigate } from 'react-router-dom'
 import { useFetchExecutives } from '@/store'
+import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 
+import useMedia from '@/hook/useMedia'
 const SearchPage = () => {
   const searchTerm = useFilter(state => state.searchTerm)
   const { data } = useQuery(SEARCH_OFFICIAL, { variables: { name: searchTerm }})
@@ -14,6 +16,7 @@ const SearchPage = () => {
 	const setLabel = useFetchExecutives(state => state.setLabel)
   const setDepartment = useFetchExecutives(state => state.setDepartment)
   const navigate = useNavigate()
+	const isSmallScreen = useMedia('(max-width: 600px)');
 
   useEffect(()=> {
     if(searchTerm == ''){
@@ -75,29 +78,29 @@ const SearchPage = () => {
     <div className="w-full p-7 bg-white flex justify-center items-center px-10">
         <span className="text-2xl font-bold pl-5">Search Result</span>
 		</div>
-			<table className="w-full border-separate border-spacing-y-5 max-w-screen-lg mx-auto space-y-7">
+			<table className="w-full border-separate border-spacing-y-5 lg:max-w-screen-lg lg:mx-auto lg:space-y-7 px-5 space-y-4">
 				<thead className="w-full">
-					<tr className="text-[#2CC84A] flex justify-around w-full">
-						<td className="w-[320px]">Name and Position</td>
-						<td className="w-[120px]">Session</td>
-						<td className="w-[100px]">Record</td>
-						<td className="">Status</td>
-						<td className="">More</td>
+					<tr className="text-[#2CC84A] flex lg:justify-around justify-around lg:w-full space-x-3 px-2 lg:px-0">
+						<td className="lg:w-[320px] w-[50%] text-sm ">Executive</td>
+						<td className="lg:w-[120px] text-sm hidden lg:flex">Session</td>
+						<td className="lg:w-[100px] text-sm ">Record</td>
+						<td className=" text-sm ">Status</td>
+						<td className=" text-sm ">More</td>
 					</tr>
 				</thead>
         {
           data?.searchOfficials?.map((official) => (
-				<tbody className="w-full bg-white flex p-5 py-8 flex-col gap-4 relative rounded-xl">
-					<tr className="flex justify-around items-center">
-						<td className="flex space-x-2 items-start z-20  w-[300px] flex-col space-y-7">
+				<tbody className="w-full bg-white flex lg:p-5 py-8 flex-col gap-4 relative rounded-xl">
+					<tr className="flex lg:justify-around lg:items-center p-2 justify-around items-center space-x-2">
+						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col space-y-7">
               <div className="flex items-center gap-4">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
-							<img src={official?.studentImage} alt="" className="w-16  h-16 object-fill rounded-full"/>
+							<img src={official?.studentImage} alt="" className="lg:w-16 lg:h-16 w-10 h-10 object-fill rounded-full"/>
 							</div>
 							<div className="">
-								<span className="text-lg font-medium">{official?.studentName}</span>
+								<span className="lg:text-lg text-xs font-extrabold">{official?.studentName}</span>
 								<div className="flex flex-col">
-									<span className="text-gray-500">{official?.position?.position}</span>
+									<span className="text-gray-500 text-xs font-semibold">{official?.position?.position}</span>
 									<div className="text-gray-500 text-xs font-semibold">
                     {official?.level === 'FACULTY' && "FACULTY" }
                     {official?.level === 'DEPARTMENT' && `${official?.department?.name}`}
@@ -107,25 +110,30 @@ const SearchPage = () => {
               </div>
       
 						</td>
-						<td className="text-center w-[80px]">{official?.session?.session}</td>
+						<td className="text-center hidden lg:flex w-[80px]">{official?.session?.session}</td>
 						<td>
               {
                 official?.level == 'FACULTY' && (
-                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
-												Accomplishment
+                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+							p-1 rounded-md lg:px-4 font-medium shadow-md">
+												{isSmallScreen ? 'feat' : 'Accomplishment'}
 							    </button>
                 )
               }
 
               {
                 official?.level == 'DEPARTMENT' && (
-                  <button className="border-[#2CC84A] text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment(official?.session, official?.department?.id, official?.department?.name)}>
-								Accomplishment
+                  <button className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+							p-1 rounded-md lg:px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment(official?.session, official?.department?.id, official?.department?.name)}>
+																				{isSmallScreen ? 'feat' : 'Accomplishment'}
+
 							</button>
                 )
               }
 						</td>
-						<td>Active</td>
+						<td>
+							<FiberManualRecordRoundedIcon className={`${official?.session?.status ? 'text-green-500' : 'text-gray-300'}`}/>
+						</td>
 						<td>
               {
                 official?.level == 'FACULTY' && (

@@ -3,6 +3,8 @@ import Line from '../../assets/line.svg'
 import { useFetchExecutives} from '@/store'
 import { useNavigate } from 'react-router-dom'
 import useMedia from '@/hook/useMedia'
+import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+
 
 
 const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, session}) => {
@@ -81,7 +83,9 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 												{isSmallScreen ? 'feat' : 'Accomplishment'}
 											</button>
 											</td>
-											<td>Active</td>
+											<td>
+												<FiberManualRecordRoundedIcon className={`${session?.status ? 'text-green-500' : 'text-gray-300'}`}/>
+											</td>
 											<td>
 												<button onClick={() => displayFacultyMembers(session)}>
 												<ArrowRightAltIcon className="text-[#2CC84A]"/>
@@ -110,7 +114,9 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, departmentPresident, 
 									</button>
 								
 										</td>
-										<td>Active</td>
+										<td>
+												<FiberManualRecordRoundedIcon className={`${session?.status ? 'text-green-500' : 'text-gray-300'}`}/>
+											</td>
 										<td>
 											<button onClick={() => displayDepartmentMembers(session, departmentPresident?.department?.id)}>
 											<ArrowRightAltIcon className="text-[#2CC84A]"/>

@@ -14,6 +14,7 @@ const GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION = gql`
     sessionFacultyAndDeptPresident {
       id
       session
+      status
       history {
         studentName
         studentImage
@@ -34,6 +35,7 @@ const GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   sessionFacultyPresidentAndVice {
     id
     session
+    status
     history {
       studentName
       studentImage
@@ -55,6 +57,7 @@ const GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION = gql`
   sessionDepartmentPresidentAndVice {
       id
     session
+    status
     history {
       studentName
       studentImage
@@ -100,6 +103,7 @@ const FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE = gql`
   getSessionFacultyPresidentAndVice(sessionId: $sessionId) {
     id
     session
+    status
     history {
       studentName
       studentImage
@@ -121,6 +125,8 @@ const FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE = gql`
   getSessionDepartmentPresidentAndVice(sessionId: $sessionId) {
     id
     session
+    status
+
     history {
       studentName
       studentImage
@@ -198,6 +204,7 @@ const SEARCH_OFFICIAL = gql`
     session {
       id
       session
+      status
     }
     level
   }
