@@ -1,6 +1,6 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { useFilter } from '@/store';
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { SEARCH_OFFICIAL } from '@/graphql/queries/officials';
 import { useNavigate } from 'react-router-dom'
@@ -9,12 +9,12 @@ import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordR
 
 import useMedia from '@/hook/useMedia'
 const SearchPage = () => {
-  const searchTerm = useFilter(state => state.searchTerm)
+  const searchTerm = useFilter((state: any) => state.searchTerm)
   const { data } = useQuery(SEARCH_OFFICIAL, { variables: { name: searchTerm }})
-  const setSession = useFetchExecutives(state => state.setSession)
-	const setLevel = useFetchExecutives(state => state.setLevel)
-	const setLabel = useFetchExecutives(state => state.setLabel)
-  const setDepartment = useFetchExecutives(state => state.setDepartment)
+  const setSession = useFetchExecutives((state: any) => state.setSession)
+	const setLevel = useFetchExecutives((state: any) => state.setLevel)
+	const setLabel = useFetchExecutives((state: any) => state.setLabel)
+  const setDepartment = useFetchExecutives((state: any) => state.setDepartment)
   const navigate = useNavigate()
 	const isSmallScreen = useMedia('(max-width: 600px)');
 
@@ -24,7 +24,7 @@ const SearchPage = () => {
     }
   }, [navigate, searchTerm])
 
-  const displayFacultyMembers = (session) => {
+  const displayFacultyMembers = (session: any) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -34,7 +34,7 @@ const SearchPage = () => {
 		navigate('/executives/detail')
 	}
 
-	const displayDepartment = (session, departmentId, departmentName) => {
+	const displayDepartment = (session: any, departmentId: string, departmentName: string) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -48,7 +48,7 @@ const SearchPage = () => {
 		navigate('/executives/detail')
 	}
 
-  const displayFacultyAccomplishment = (session) => {
+  const displayFacultyAccomplishment = (session: any) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -58,7 +58,7 @@ const SearchPage = () => {
 		navigate('/department/accomplishment')
 	}
 
-  const displayDepartmentAccomplishment = (session, departmentId, departmentName) => {
+  const displayDepartmentAccomplishment = (session: any, departmentId: string, departmentName: string) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -89,7 +89,7 @@ const SearchPage = () => {
 					</tr>
 				</thead>
         {
-          data?.searchOfficials?.map((official) => (
+          data?.searchOfficials?.map((official: any) => (
 				<tbody className="w-full bg-white flex lg:p-5 py-8 flex-col gap-4 relative rounded-xl">
 					<tr className="flex lg:justify-around lg:items-center p-2 justify-around items-center space-x-2">
 						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col space-y-7">
@@ -117,7 +117,7 @@ const SearchPage = () => {
                   <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md">
 												{isSmallScreen ? 'feat' : 'Accomplishment'}
-							    </button>
+</button>
                 )
               }
 
@@ -139,7 +139,7 @@ const SearchPage = () => {
                 official?.level == 'FACULTY' && (
                   <button onClick={() => displayFacultyMembers(official?.session)}>
 									<ArrowRightAltIcon className="text-[#2CC84A]"/>
-							    </button>
+</button>
                 )
               }
               {
