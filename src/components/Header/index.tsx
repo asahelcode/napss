@@ -19,20 +19,22 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import { Session } from '@/types'
+
+
 const Header = () => {
   const [search, setSearch] = useState('')
   const [hierarchy, setHierarchy] = useState('None')
   const [session, setSession] = useState('')
-  const storeHierarchy = useFilter((state) => state.storeHierarchy)
-  const storeSession = useFilter((state) => state.storeSession)
-  const storeSearchTerm = useFilter((state) => state.storeSearchTerm)
+  const storeHierarchy = useFilter((state: any) => state.storeHierarchy) as (hierarchy: string) => void
+  const storeSession = useFilter((state: any) => state.storeSession) as (session: string) => void
+  const storeSearchTerm = useFilter((state: any) => state.storeSearchTerm) as (term: string) => void
   const { data: sessions } = useQuery(GET_SESSIONS)
   const navigate = useNavigate()
 
@@ -110,7 +112,7 @@ const Header = () => {
              <SelectContent>
                <SelectItem value="session">Session</SelectItem>
                {
-                sessions?.sessions?.map((session) => (
+                sessions?.sessions?.map((session: Session) => (
                   <SelectItem value={session?.id}>{session?.session}</SelectItem>
                 ))
                }
@@ -148,7 +150,7 @@ const Header = () => {
              <SelectContent>
                <SelectItem value="session">Session</SelectItem>
                {
-                sessions?.sessions?.map((session) => (
+                sessions?.sessions?.map((session: Session) => (
                   <SelectItem value={session?.id}>{session?.session}</SelectItem>
                 ))
                }

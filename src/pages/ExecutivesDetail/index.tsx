@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useMemo } from 'react'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import useMedia from '@/hook/useMedia'
+
+
 const ExecutiveDetail = () => {
-  const session = useFetchExecutives(state => state.session)
-  const level = useFetchExecutives(state => state.level)
-  const label = useFetchExecutives(state => state.label)
-  const department = useFetchExecutives(state => state.department)
+  const session = useFetchExecutives((state: any) => state.session)
+  const level = useFetchExecutives((state: any) => state.level)
+  const label = useFetchExecutives((state: any) => state.label)
+  const department = useFetchExecutives((state: any) => state.department)
   const [executives, setExecutives] = useState([])
   const { data: facultyExecutives } = useQuery(SELECTED_FACULTY_EXECUTIVE_MEMBERS, {
     variables: { sessionId: session?.id },
@@ -33,11 +35,13 @@ const ExecutiveDetail = () => {
   });
   const navigate = useNavigate()
 
+  console.log(facultyExecutives,departmentExecutives)
+
 
   const { president, vicePresident, otherExecutives } = useMemo(() => {
-    const president = executives?.find((exec) => exec?.position?.position === 'President');
-    const vicePresident = executives?.find((exec) => exec?.position?.position === 'Vice President');
-    const otherExecutives = executives?.filter((exec) => exec?.position?.position !== 'President' && exec?.position?.position !== 'Vice President');
+    const president: any = executives?.find((exec: any) => exec?.position?.position === 'President');
+    const vicePresident: any = executives?.find((exec: any) => exec?.position?.position === 'Vice President');
+    const otherExecutives: any = executives?.filter((exec: any) => exec?.position?.position !== 'President' && exec?.position?.position !== 'Vice President');
 
     return { president, vicePresident, otherExecutives}
   }, [executives])
@@ -103,7 +107,7 @@ const ExecutiveDetail = () => {
         </thead>
         <tbody className="flex space-y-4 flex-col">
           {
-            otherExecutives?.map((executive) => (
+            otherExecutives?.map((executive: any) => (
             <tr className=" flex lg:justify-between  bg-white lg:p-5 p-3 items-center rounded-xl lg:px-16">
               <td className="lg:w-3/5 w-[200px] flex lg:flex-row flex-col justify-center lg:justify-start space-x-3 items-start lg:items-center">
 							<div className="p-1 border border-[#2CC84A] rounded-full ml-8 lg:ml-0">

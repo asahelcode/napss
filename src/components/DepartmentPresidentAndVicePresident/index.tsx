@@ -4,17 +4,17 @@ import { useFetchExecutives } from '@/store'
 import { useNavigate } from 'react-router-dom'
 import useMedia from '@/hook/useMedia'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+import { Session } from '@/types'
 
-const DepartmentPresidentAndVicePresident = ({president, vicePresident, session, sessionId}) => {
-	const setSession = useFetchExecutives(state => state.setSession)
-	const setLevel = useFetchExecutives(state => state.setLevel)
-	const setLabel = useFetchExecutives(state => state.setLabel)
-	const setDepartment = useFetchExecutives(state => state.setDepartment)
+const DepartmentPresidentAndVicePresident = ({president, vicePresident, session, sessionId}: any) => {
+	const setSession = useFetchExecutives((state: any) => state.setSession)
+	const setLevel = useFetchExecutives((state: any) => state.setLevel)
+	const setLabel = useFetchExecutives((state: any) => state.setLabel)
+	const setDepartment = useFetchExecutives((state: any) => state.setDepartment)
 	const isSmallScreen = useMedia('(max-width: 600px)');
 	const navigate = useNavigate()
 
-
-	const displayDepartment = (session, departmentId) => {
+	const displayDepartment = (session: Session, departmentId: string) => {
 		setSession({
 			id: sessionId,
 			session
@@ -28,7 +28,7 @@ const DepartmentPresidentAndVicePresident = ({president, vicePresident, session,
 		navigate('/executives/detail')
 	}
 
-	const displayDepartmentAccomplishment = (session, departmentId) => {
+	const displayDepartmentAccomplishment = (session: Session, departmentId: string) => {
 		setSession({
 			id: session?.id,
 			session: session?.session

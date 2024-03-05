@@ -1,6 +1,6 @@
 // import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 // import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { FETCH_DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, FETCH_FACULTY_PRESIDENT_AND_VICE_PRESIDENT_BY_SESSION_VALUE, GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION, GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION, GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION } from '@/graphql/queries/officials';
 import { useFilter, useSetOfficials } from '@/store';
@@ -9,16 +9,16 @@ import FacultyPresidentAndVicePresident from '@/components/FacultyPresidentAndVi
 import DepartmentPresidentAndVicePresident from '@/components/DepartmentPresidentAndVicePresident';
 
 const HomePage = () => {
-	const session = useFilter((state) => state.session)
-	const searchTerm = useFilter((state) => state.searchTerm)
-	const setDefaultOfficials = useSetOfficials(state => state.setDefaultOfficials)
-	const setDepartmentOfficials = useSetOfficials(state => state.setDepartmentOfficials)
-	const setFacultyOfficials = useSetOfficials(state => state.setFacultyOfficials)
-	const defaultOfficials = useSetOfficials(state => state.defaultOfficials)
-	const departmentOfficials = useSetOfficials(state => state.departmentOfficials)
-	const facultyOfficials = useSetOfficials(state => state.facultyOfficials)
+	const session = useFilter((state: any) => state.session)
+	// const searchTerm = useFilter((state: any) => state.searchTerm)
+	const setDefaultOfficials = useSetOfficials((state: any) => state.setDefaultOfficials)
+	const setDepartmentOfficials = useSetOfficials((state: any) => state.setDepartmentOfficials)
+	const setFacultyOfficials = useSetOfficials((state: any) => state.setFacultyOfficials)
+	const defaultOfficials = useSetOfficials((state: any) => state.defaultOfficials)
+	const departmentOfficials = useSetOfficials((state: any) => state.departmentOfficials)
+	const facultyOfficials = useSetOfficials((state: any) => state.facultyOfficials)
 
-	const { data, loading } = useQuery(GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION)
+	const { data } = useQuery(GET_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION)
 	const { data: facultyPresidentAndVicePresident } = useQuery(GET_FACULTY_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION)
 	const { data: departmentPresidentAndVicePresident } = useQuery(GET_DEPARTMENT_PRESIDENTS_AND_VICE_PRESIDENTS_BY_SESSION)
 	const { data: fetchFacultyDeptPresidents } = useQuery(FETCH_FACULTY_AND_DEPARTMENT_PRESIDENTS_BY_SESSION_VALUE, {
@@ -31,30 +31,29 @@ const HomePage = () => {
 		variables: { sessionId: session }
 	})
 
-	const hierarchy = useFilter((state) => state.hierarchy)
+	const hierarchy = useFilter((state: any) => state.hierarchy)
 
-
-	const getFacultyPresident = (array) => {
-		return array?.filter((hist) => hist.level === 'FACULTY' && hist.position?.position === 'President')[0]
+	const getFacultyPresident = (array: any) => {
+		return array?.filter((hist: any) => hist.level === 'FACULTY' && hist.position?.position === 'President')[0]
 	}
 
-	const getFacultyVicePresident = (array) => {
-		return array?.filter((hist) => hist.level === 'FACULTY' && hist.position?.position === 'Vice President')[0]
+	const getFacultyVicePresident = (array: any) => {
+		return array?.filter((hist: any) => hist.level === 'FACULTY' && hist.position?.position === 'Vice President')[0]
 	}
 
-	const getRandomDepartmentPresident = (array) => {
-		const presidents = array?.filter((hist) => hist.level === 'DEPARTMENT' && hist.position?.position === 'President')
+	const getRandomDepartmentPresident = (array: any) => {
+		const presidents = array?.filter((hist: any) => hist.level === 'DEPARTMENT' && hist.position?.position === 'President')
 		const randomIndex = Math.floor(Math.random() * presidents.length);
 
 		return presidents[randomIndex]
 	}
 
-	const getDepartmentPresident = (array) => {
-		return array?.filter((hist) => hist.position?.position === 'President')[0]
+	const getDepartmentPresident = (array: any) => {
+		return array?.filter((hist: any) => hist.position?.position === 'President')[0]
 	}
 
-	const getDepartmentVicePresident = (array) => {
-		return array?.filter((hist) => hist.position?.position === 'Vice President')[0]
+	const getDepartmentVicePresident = (array: any) => {
+		return array?.filter((hist: any) => hist.position?.position === 'Vice President')[0]
 	}
 
 	useEffect(() => {
@@ -72,10 +71,10 @@ const HomePage = () => {
 
 
 	if(hierarchy === 'DEPARTMENT') {
-		departmentOfficials?.map((session) => {
+		departmentOfficials?.map((session: any) => {
 			const sessionValue = session?.session
 			departmentBySessionOfficials[sessionValue] = {}
-		session?.history?.map((hist) => {
+		session?.history?.map((hist: any) => {
 			const departmentName = hist?.department?.name
 			if (departmentName) {
 				if (departmentBySessionOfficials[sessionValue][departmentName]) {
@@ -118,7 +117,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
           <span className="lg:text-2xl text-xl font-bold pl-5">
 						{/* {hierarchy == 'None' && "Records for Faculty of Physical Sciences"} */}
 						{hierarchy === 'None' ? "" : hierarchy } EXECUTIVES RECORD
- 					</span>
+	</span>
 		</div>
 			<table className="w-full border-separate border-spacing-y-3 pt-7 lg:max-w-screen-lg px-4 max-w-screen-md mx-auto space-y-7">
 				<thead className="lg:w-full  lg:flex">
@@ -132,7 +131,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 				</thead>
 					{
 						(hierarchy === 'None') && (
-								defaultOfficials?.map((session) => {
+								defaultOfficials?.map((session: any) => {
 									console.log(session)
 							const facultyPresident = getFacultyPresident(session?.history)
 							const departmentPresident = getRandomDepartmentPresident(session?.history)
@@ -154,7 +153,7 @@ const departmentOfficialsSession = Object.keys(departmentBySessionOfficials)
 					}
 
 					{
-						(hierarchy === 'FACULTY') && facultyOfficials?.map((session) => {
+						(hierarchy === 'FACULTY') && facultyOfficials?.map((session: any) => {
 							const facultyPresident = getFacultyPresident(session?.history)
 							const facultyVicePresident = getFacultyVicePresident(session?.history)
 

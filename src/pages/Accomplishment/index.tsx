@@ -6,24 +6,25 @@ import { useFetchExecutives } from '@/store'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useMedia from '@/hook/useMedia'
 const Accomplishment = () => {
-  const session = useFetchExecutives(state => state.session)
-  const department = useFetchExecutives(state => state.department)
-  const level = useFetchExecutives(state => state.level)
-  const label = useFetchExecutives(state => state.label)
+  const session = useFetchExecutives((state: any) => state.session)
+  const department = useFetchExecutives((state: any) => state.department)
+  const level = useFetchExecutives((state: any) => state.level)
+  const label = useFetchExecutives((state: any) => state.label)
   const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
-  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data) => {
+  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data: any) => {
       if (level === 'DEPARTMENT') {
+        console.log(data)
         setAccomplishments(departmentAccomplishment?.departmentAccomplishments)
       }
     }})
-  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
+  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data: any) => {
       if (level === 'FACULTY') {
+        console.log(data)
         setAccomplishments(facultyAccomplishment?.facultyAccomplishments)
       }
     }})
@@ -41,7 +42,7 @@ const Accomplishment = () => {
   };
 
   const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -55,7 +56,7 @@ const Accomplishment = () => {
 
   const [open, setOpen] = useState(false)
 
-  const handleOpen = (description) => {
+  const handleOpen = (description: string) => {
     setDescription(description)
     setOpen(true)
   }
@@ -77,12 +78,12 @@ const Accomplishment = () => {
         <div className="flex lg:space-x-10 items-center w-32">
           <span className="font-bold text-sm lg:text-lg">{session?.session}</span>
         </div>
-		  </div>
+    </div>
       <div className="w-full h-fit bg-white flex lg:p-10 flex-col space-y-5 lg:pl-20" >
         <div className="p-5">
         <Slider {...settings}>
           {
-            accomplishments?.map((accomplishment) => (
+            accomplishments?.map((accomplishment: any) => (
               <button onClick={() => handleOpen(accomplishment?.description)}>
                 <div className="flex flex-col space-y-3 justify-center items-center">
                 <img src={accomplishment?.imageUrl} alt="" className="w-72 h-64 object-cover  rounded-md" />
