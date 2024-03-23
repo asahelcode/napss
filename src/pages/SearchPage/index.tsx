@@ -6,11 +6,13 @@ import { SEARCH_OFFICIAL } from '@/graphql/queries/officials';
 import { useNavigate } from 'react-router-dom'
 import { useFetchExecutives } from '@/store'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
 import useMedia from '@/hook/useMedia'
 const SearchPage = () => {
   const searchTerm = useFilter((state: any) => state.searchTerm)
-  const { data } = useQuery(SEARCH_OFFICIAL, { variables: { name: searchTerm }})
+  const { data, loading: searchLoading } = useQuery(SEARCH_OFFICIAL, { variables: { name: searchTerm }})
   const setSession = useFetchExecutives((state: any) => state.setSession)
 	const setLevel = useFetchExecutives((state: any) => state.setLevel)
 	const setLabel = useFetchExecutives((state: any) => state.setLabel)
@@ -29,7 +31,7 @@ const SearchPage = () => {
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLabel('Faculty of Physical Sciences')
 		setLevel('FACULTY')
 		navigate('/executives/detail')
 	}
@@ -39,7 +41,7 @@ const SearchPage = () => {
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel(`DEPARTMENT OF ${departmentName}`)
+		setLabel(`Department of ${departmentName}`)
 		setDepartment({
 			id: departmentId,
 			department: departmentName
@@ -53,7 +55,7 @@ const SearchPage = () => {
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLabel('Faculty of Physical Sciences')
 		setLevel('FACULTY')
 		navigate('/department/accomplishment')
 	}
@@ -63,7 +65,7 @@ const SearchPage = () => {
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel(`DEPARTMENT OF ${departmentName}`)
+		setLabel(`Department of ${departmentName}`)
 		setDepartment({
 			id: departmentId,
 			department: departmentName
@@ -75,10 +77,10 @@ const SearchPage = () => {
 
   return (
     <>
-    <div className="w-full p-7 bg-white flex justify-center items-center px-10">
+    <div className="w-full p-7 bg-white flex justify-center items-center px-10 font-sora">
         <span className="text-2xl font-bold pl-5">Search Result</span>
 		</div>
-			<table className="w-full border-separate border-spacing-y-5 lg:max-w-screen-lg lg:mx-auto lg:space-y-7 px-5 space-y-4">
+			<table className="w-full border-separate border-spacing-y-5 lg:max-w-screen-lg lg:mx-auto lg:space-y-7 px-5 space-y-4 font-manrope">
 				<thead className="w-full">
 					<tr className="text-[#2CC84A] flex lg:justify-around justify-around lg:w-full space-x-3 px-2 lg:px-0">
 						<td className="lg:w-[320px] w-[50%] text-sm ">Executive</td>
@@ -89,7 +91,13 @@ const SearchPage = () => {
 					</tr>
 				</thead>
         {
-          data?.searchOfficials?.map((official: any) => (
+          (searchLoading) ? (
+						<Box sx={{ width: '100%' }}>
+							<Skeleton animation="wave" sx={{ height: 100}}/>
+							<Skeleton animation="wave" sx={{ height: 100}}/>
+							<Skeleton animation="wave" sx={{ height: 100}}/>
+						</Box>
+					) : data?.searchOfficials?.map((official: any) => (
 				<tbody className="w-full bg-white flex lg:p-5 py-8 flex-col gap-4 relative rounded-xl">
 					<tr className="flex lg:justify-around lg:items-center p-2 justify-around items-center space-x-2">
 						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col space-y-7">
@@ -110,7 +118,7 @@ const SearchPage = () => {
               </div>
       
 						</td>
-						<td className="text-center hidden lg:flex w-[80px]">{official?.session?.session}</td>
+						<td className="text-center hidden lg:flex w-[80px] font-bold">{official?.session?.session}</td>
 						<td>
               {
                 official?.level == 'FACULTY' && (
