@@ -32,9 +32,9 @@ const Header = () => {
   const [search, setSearch] = useState('')
   const [hierarchy, setHierarchy] = useState('None')
   const [session, setSession] = useState('')
-  const storeHierarchy = useFilter((state: any) => state.storeHierarchy) as (hierarchy: string) => void
-  const storeSession = useFilter((state: any) => state.storeSession) as (session: string) => void
-  const storeSearchTerm = useFilter((state: any) => state.storeSearchTerm) as (term: string) => void
+  const storeHierarchy = useFilter((state: any) => state.storeHierarchy)
+  const storeSession = useFilter((state: any) => state.storeSession)
+  const storeSearchTerm = useFilter((state: any) => state.storeSearchTerm)
   const { data: sessions } = useQuery(GET_SESSIONS)
   const navigate = useNavigate()
 
@@ -53,15 +53,11 @@ const Header = () => {
     }
   }, [hierarchy, navigate, search, session, storeHierarchy, storeSearchTerm, storeSession])
 
-  // Debounce callback
   const debounced = useDebouncedCallback(
-    // function
     (term) => {
-      // Make your API call here with the debounced value
      storeSearchTerm(term)
      navigate('/search')
     },
-    // delay in ms
     800
   );
 

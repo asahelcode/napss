@@ -19,7 +19,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: a
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLabel('Faculty of Physical Sciences')
 		setLevel('FACULTY')
 		navigate('/executives/detail')
 	}
@@ -29,23 +29,24 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: a
 			id: session?.id,
 			session: session?.session
 		})
-		setLabel('FACULTY OF PHYSICAL SCIENCES')
+		setLabel('Faculty of Physical Sciences')
 		setLevel('FACULTY')
 		navigate('/department/accomplishment')
 	}
 
   return (
     <>
-					<tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2">
+					<tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2 font-manrope">
 						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col lg:space-y-7 space-y-3">
               <div className="flex items-start  lg:items-center gap-4">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
 							<img src={president?.studentImage} alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>
 							</div>
 							<div className="">
-								<span className="lg:text-lg text-xs lg:font-medium font-bold">{president?.studentName}</span>
-								<div>
-									<span className="text-gray-500 text-xs lg:text-lg">{president?.position?.position}</span>
+								<span className="lg:text-lg  text-xs lg:font-semibold font-bold">{president?.studentName}</span>
+								<div className="flex flex-col">
+									<span className="text-gray-500 text-xs lg:text-sm lg:font-semibold">{president?.department?.name}</span>
+									<span className="text-gray-500 text-xs lg:text-sm lg:font-semibold font-sora">President</span>
 								</div>
 							</div>
               </div>
@@ -56,14 +57,15 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: a
 							</div>
 							<div className="">
 								<span className="lg:text-lg text-xs lg:font-medium font-bold">{vicePresident?.studentName}</span>
-								<div>
-									<span className="text-gray-500 text-xs lg:text-lg">{vicePresident?.position?.position}</span>
+								<div className="flex flex-col">
+									<span className="text-gray-500 text-xs lg:text-sm lg:font-semibold">{vicePresident?.department?.name}</span>
+									<span className="text-gray-500 text-xs lg:text-sm lg:font-semibold font-sora">Vice President</span>
 								</div>
 							</div>
               </div>
       
 						</td>
-						<td className="text-center hidden lg:flex w-[80px]">{session?.session}</td>
+						<td className="text-center hidden lg:flex w-[80px] font-bold">{session?.session}</td>
 						<td>
 							<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md" >

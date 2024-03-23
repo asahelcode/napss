@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -14,7 +15,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-      },
+      }
     },
     extend: {
       keyframes: {
@@ -26,6 +27,12 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+      },
+      fontFamily: {
+        'sora': ['Sora'],
+        'inter': ['Inter'],
+        'manrope': ['Manrope'],
+        'eagle': ['Eagle Lake']
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
