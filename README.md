@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+## What it does
+This project is built to keep record of past and current executive member in the Faculty of Physical Sciences, University of Nigeria, Nsukka.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Getting start
+- Install node to your computer
+- run `yarn` to install dependencies
+- enter `yarn dev` to start the application
 
-Currently, two official plugins are available:
+## Specific features
+- Executive members can be filtered by faculty and department
+- There's also a search functionality for every executive
+- Accomplishment by every faculty and department is also provided
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Bug or feature improvement
+- The page takes a bit of time to load up
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tech Stack
+- Reactjs
+- PostgresQL
+- GraphQL
+- NodeJs(Express)
+- Prisma ORM
