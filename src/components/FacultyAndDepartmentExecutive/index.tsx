@@ -7,9 +7,6 @@ import Skeleton from '@mui/material/Skeleton';
 
 const FacultyAndDepartmentExecutive = ({ defaultOfficials, loading }: any) => {
   
-
-
-
   return loading ? (
          <Box sx={{ width: '100%' }}>
             <Skeleton animation="wave" sx={{ height: 100 }}/>

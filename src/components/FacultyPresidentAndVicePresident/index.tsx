@@ -40,7 +40,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: a
 						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col lg:space-y-7 space-y-3">
               <div className="flex items-start  lg:items-center gap-4">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
-							<img src={president?.studentImage} alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>
+							<img src={president?.studentImage} alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full z-20"/>
 							</div>
 							<div className="">
 								<span className="lg:text-lg  text-xs lg:font-semibold font-bold">{president?.studentName}</span>
@@ -50,7 +50,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: a
 								</div>
 							</div>
               </div>
-              <img src={Line} alt="" className="absolute h-16 w-16 left-[10px] top-[50px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em]"/>
+              <img src={Line} alt="" className="absolute h-16 w-16 left-[12px] top-[60px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em] -z-20"/>
               <div className="flex lg:pl-10 pl-7 lg:items-center items-start lg:gap-4 gap-2">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
 							<img src={vicePresident?.studentImage}  alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>
