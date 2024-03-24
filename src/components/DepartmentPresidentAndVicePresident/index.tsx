@@ -61,8 +61,8 @@ const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: a
   return (
     <>
 						<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl font-manrope">
-						<tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2">
-						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col lg:space-y-7 space-y-3">
+						<tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2  z-20">
+						<td className="flex space-x-2 items-start w-[170px] lg:w-[300px] flex-col lg:space-y-7 space-y-3">
               <div className="flex items-start  lg:items-center gap-4">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
 							<img src={president?.studentImage} className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>
@@ -75,7 +75,7 @@ const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: a
 								</div>
 							</div>
               </div>
-              <img src={Line} alt="" className="absolute h-16 w-16 left-[10px] top-[50px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em]"/>
+              <img src={Line} alt="" className="absolute h-16 w-16 left-[10px] top-[55px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em] -z-20"/>
               <div className="flex lg:pl-10 pl-7 lg:items-center items-start lg:gap-4 gap-2">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
 							<img src={vicePresident?.studentImage} alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>

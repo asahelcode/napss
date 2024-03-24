@@ -2,16 +2,40 @@ import { useFilter, } from '@/store';
 import FacultyExecutives from '@/components/FacultyExecutives'
 import DepartmentExecutive from '@/components/DepartmentExecutive'
 import FacultyAndDepartmentExecutive from '@/components/FacultyAndDepartmentExecutive'
+import { useQuery } from '@apollo/client';
+import { FACULTY_PRESIDENTS, SESSION_FACULTY_PRESIDENT } from '@/graphql/queries/executives'
+import { useEffect, useState } from 'react'
+
+
 
 
 const HomePage = () => {
 	const hierarchy = useFilter((state: any) => state.hierarchy)
 	const session = useFilter((state: any) => state.session)
 
+	const [defaultOfficials, setDefaultOfficials] = useState<any>([])
+  const { data: facultyDepartmentPresident, loading: facultyDepartmentPresidentLoading } = useQuery(FACULTY_PRESIDENTS, {
+  })
+  const { data: sessionFacultyDepartmentPresident, loading: sessionFacultyDepartmentPresidentLoading } = useQuery(SESSION_FACULTY_PRESIDENT, {
+    variables: {
+      sessionId: session
+    },
+  })
+
+	useEffect(() => {
+		if (hierarchy === 'None' && session === '') {
+      setDefaultOfficials(facultyDepartmentPresident?.sessions)
+    } else if (session !== '' && hierarchy === 'None') {
+      const temp = []
+      temp.push(sessionFacultyDepartmentPresident?.session)
+      setDefaultOfficials(temp)
+    }
+  }, [facultyDepartmentPresident?.sessions, hierarchy, session, sessionFacultyDepartmentPresident?.session]);
+
 	return (
 		<>
 		<div className="w-full p-7 bg-white flex justify-center text-center items-center px-10">
-          <span className="lg:text-2xl text-xl font-bold pl-5 font-sora">
+          <span className="lg:text-2xl text-xl font-bold pl-5 font-inter">
 					{hierarchy === 'None' ? "" : hierarchy } EXECUTIVES RECORD
 					</span>
 		</div>
@@ -26,7 +50,7 @@ const HomePage = () => {
 					</tr>
 				</thead>
 					{
-							(hierarchy === 'None') && <FacultyAndDepartmentExecutive  session={session} hierarchy={hierarchy} />
+							(hierarchy === 'None') && <FacultyAndDepartmentExecutive  defaultOfficials={defaultOfficials} loading={facultyDepartmentPresidentLoading || sessionFacultyDepartmentPresidentLoading} />
 					}
 
 					{
