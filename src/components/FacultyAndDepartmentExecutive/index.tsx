@@ -1,37 +1,16 @@
 
 import FacultyAndDepartmentPresidents from '@/components/FacultyAndDepartmentPresidents';
-import { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { FACULTY_PRESIDENTS, SESSION_FACULTY_PRESIDENT } from '@/graphql/queries/executives'
+// import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 
-interface FacultyAndDepartmentExecutiveProp {
-  session: string
-  hierarchy: string
-}
 
-const FacultyAndDepartmentExecutive = ({session, hierarchy}: FacultyAndDepartmentExecutiveProp) => {
-  const [defaultOfficials, setDefaultOfficials] = useState<any>([])
-  const { data: facultyDepartmentPresident, loading: facultyDepartmentPresidentLoading } = useQuery(FACULTY_PRESIDENTS, {
-  })
-  const { data: sessionFacultyDepartmentPresident, loading: sessionFacultyDepartmentPresidentLoading } = useQuery(SESSION_FACULTY_PRESIDENT, {
-    variables: {
-      sessionId: session
-    },
-  })
+const FacultyAndDepartmentExecutive = ({ defaultOfficials, loading }: any) => {
+  
 
-  useEffect(() => {
-    if (hierarchy === 'None' && session === '') {
-      setDefaultOfficials(facultyDepartmentPresident?.sessions)
-    } else if (session !== '' && hierarchy === 'None') {
-      const temp = []
-      temp.push(sessionFacultyDepartmentPresident?.session)
-      setDefaultOfficials(temp)
-    }
-  }, [facultyDepartmentPresident?.sessions, hierarchy, session, sessionFacultyDepartmentPresident?.session]);
 
-  return (facultyDepartmentPresidentLoading || sessionFacultyDepartmentPresidentLoading) ? (
+
+  return loading ? (
          <Box sx={{ width: '100%' }}>
             <Skeleton animation="wave" sx={{ height: 100 }}/>
             <Skeleton animation="wave" sx={{ height: 100 }}/>
