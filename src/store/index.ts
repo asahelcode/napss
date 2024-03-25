@@ -1,48 +1,34 @@
 import {create} from 'zustand';
-
-interface ValueI {
-  value: string
-}
+import { useSetOfficialsStore, useFetchExecutiveStore, Official, useFilterStore } from '@/types'
 
 
-interface Department {
-  id: string
-  department: string
-}
-
-interface Session {
-  id: string
-  session: string
-}
-
-
-const useFilter = create((set) => ({
+const useFilter = create<useFilterStore>((set) => ({
   hierarchy: 'None',
   session: '',
   searchTerm: '',
-  storeHierarchy: (value: ValueI) => set({ hierarchy: value }),
-  storeSession: (value: ValueI) => set({ session: value }),
-  storeSearchTerm: (value: ValueI) => set({ searchTerm : value })
+  storeHierarchy: (value) => set({ hierarchy: value }),
+  storeSession: (value) => set({ session: value }),
+  storeSearchTerm: (value) => set({ searchTerm : value })
 }));
 
-const useFetchExecutives = create((set) => ({
+const useFetchExecutives = create<useFetchExecutiveStore>((set) => ({
   department: { id: '', department: ''},
   session: {id: '', session: ''},
   level: '',
   label: '',
-  setDepartment: (value: Department) => set({ department: value }),
-  setLevel: (value: ValueI) => set({ level: value }),
-  setLabel: (value: ValueI) => set({ label: value }),
-  setSession: (value: Session) => set({ session: value })
+  setDepartment: (value: {id: string; department: string}) => set({ department: value }),
+  setLevel: (value) => set({ level: value }),
+  setLabel: (value) => set({ label: value }),
+  setSession: (value) => set({ session: value })
 }))
 
-const useSetOfficials = create((set) => ({
+const useSetOfficials = create<useSetOfficialsStore>((set) => ({
   defaultOfficials: [],
   departmentOfficials: [],
   facultyOfficials: [],
-  setDefaultOfficials: (value: any) => set({ defaultOfficials: value }),
-  setDepartmentOfficials: (value: any) => set({ departmentOfficials: value }),
-  setFacultyOfficials: (value: any) => set({ facultyOfficials: value})
+  setDefaultOfficials: (value: Official[]) => set({ defaultOfficials: value }),
+  setDepartmentOfficials: (value: Official[]) => set({ departmentOfficials: value }),
+  setFacultyOfficials: (value: Official[]) => set({ facultyOfficials: value})
 }))
 
 

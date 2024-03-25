@@ -7,12 +7,19 @@ import useMedia from '@/hook/useMedia'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import { DEPARTMENT_PRESIDENT_AND_VICE_PRESIDENT } from '@/graphql/queries/executives'
 import { useQuery } from '@apollo/client'
+import { Department } from '@/types'
 
-const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: any) => {
-	const setSession = useFetchExecutives((state: any) => state.setSession)
-	const setLevel = useFetchExecutives((state: any) => state.setLevel)
-	const setLabel = useFetchExecutives((state: any) => state.setLabel)
-	const setDepartment = useFetchExecutives((state: any) => state.setDepartment)
+interface DepartmentPresidentAndVicePresidentProp {
+	department: Department
+	session: string
+	sessionId: string
+}
+
+const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: DepartmentPresidentAndVicePresidentProp) => {
+	const setSession = useFetchExecutives((state) => state.setSession)
+	const setLevel = useFetchExecutives((state) => state.setLevel)
+	const setLabel = useFetchExecutives((state) => state.setLabel)
+	const setDepartment = useFetchExecutives((state) => state.setDepartment)
 	const isSmallScreen = useMedia('(max-width: 600px)');
 	const navigate = useNavigate()
 
@@ -27,7 +34,7 @@ const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: a
 	const president = useMemo(() => data?.departmentPresidentAndVicePresident?.filter((member: any) => member?.position?.position === 'President')[0], [data?.departmentPresidentAndVicePresident])
 	const vicePresident = useMemo(() => data?.departmentPresidentAndVicePresident?.filter((member: any) => member?.position?.position === 'Vice President')[0], [data?.departmentPresidentAndVicePresident])
 	
-	const displayDepartment = (department: any) => {
+	const displayDepartment = (department: Department) => {
 		console.log(department)
 		setSession({
 			id: sessionId,
@@ -42,9 +49,7 @@ const DepartmentPresidentAndVicePresident = ({department, session, sessionId}: a
 		navigate('/executives/detail')
 	}
 
-	console.log(department)
-
-	const displayDepartmentAccomplishment = (department: any) => {
+	const displayDepartmentAccomplishment = (department: Department) => {
 		setSession({
 			id: sessionId,
 			session

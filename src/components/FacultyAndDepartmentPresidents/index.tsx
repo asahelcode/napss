@@ -4,18 +4,22 @@ import { useFetchExecutives} from '@/store'
 import { useNavigate } from 'react-router-dom'
 import useMedia from '@/hook/useMedia'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import { Session } from '@/types'
 import {  useState } from 'react'
 import {DEPARTMENT_PRESIDENTS_BY_SESSION} from '@/graphql/queries/executives'
 import { useQuery } from '@apollo/client'
+import { Official, Session, Department } from '@/types'
 
+type FacultyDepartmentPresidentsProp = {
+	facultyPresident: Official
+	session: Session
+}
 
-const FacultyAndDepartmentPresidents = ({facultyPresident, session}: any) => {
-	const setSession = useFetchExecutives((state: any) => state.setSession)
-	const setLevel = useFetchExecutives((state: any) => state.setLevel)
-	const setLabel = useFetchExecutives((state: any) => state.setLabel)
-	const setDepartment = useFetchExecutives((state: any) => state.setDepartment)
-	const [deptPresident, setDeptPresident] = useState<any>(null)
+const FacultyAndDepartmentPresidents = ({facultyPresident, session}: FacultyDepartmentPresidentsProp) => {
+	const setSession = useFetchExecutives((state) => state.setSession)
+	const setLevel = useFetchExecutives((state) => state.setLevel)
+	const setLabel = useFetchExecutives((state) => state.setLabel)
+	const setDepartment = useFetchExecutives((state) => state.setDepartment)
+	const [deptPresident, setDeptPresident] = useState<Official>()
 	const isSmallScreen = useMedia('(max-width: 600px)')
 	const {loading: departmentPresidentsLoading } = useQuery(DEPARTMENT_PRESIDENTS_BY_SESSION, {
 		variables: {
@@ -48,18 +52,20 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, session}: any) => {
 		navigate('/executives/detail')
 	}
 	
-	const displayDepartmentMembers = (session: Session, department: any) => {
-		setSession({
-			id: session?.id,
-			session: session?.session
-		})
-		setLabel(`Department of ${department?.name}`)
-		setDepartment({
-			id: department?.id,
-			department: department?.name
-		})
-		setLevel('DEPARTMENT')
-		navigate('/executives/detail')
+	const displayDepartmentMembers = (session: Session, department: Department | undefined) => {
+		if(department) {
+			setSession({
+				id: session?.id,
+				session: session?.session
+			})
+			setLabel(`Department of ${department?.name}`)
+			setDepartment({
+				id: department?.id,
+				department: department?.name
+			})
+			setLevel('DEPARTMENT')
+			navigate('/executives/detail')
+		}
 	}
 
 	const displayFacultyAccomplishment = (session: Session) => {
@@ -72,18 +78,20 @@ const FacultyAndDepartmentPresidents = ({facultyPresident, session}: any) => {
 		navigate('/department/accomplishment')
 	}
 
-	const displayDepartmentAccomplishment = (session: Session, department: any) => {
+	const displayDepartmentAccomplishment = (session: Session, department: Department | undefined) => {
+		if(department) {
 		setSession({
 			id: session?.id,
 			session: session?.session
 		})
 		setLabel(`Department of ${department?.name}`)
-		setDepartment({
-			id: department?.id,
-			department: department?.name
-		})
-		setLevel('DEPARTMENT')
-		navigate('/department/accomplishment')	
+			setDepartment({
+				id: department?.id,
+				department: department?.name
+			})
+			setLevel('DEPARTMENT')
+			navigate('/department/accomplishment')	
+		}
 	}
 	
   return (

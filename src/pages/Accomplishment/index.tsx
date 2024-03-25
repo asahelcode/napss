@@ -9,21 +9,22 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useMedia from '@/hook/useMedia'
 import Box from '@mui/material/Box';
+import { Accomplishment } from '@/types'
 
 const Accomplishment = () => {
-  const session = useFetchExecutives((state: any) => state.session)
-  const department = useFetchExecutives((state: any) => state.department)
-  const level = useFetchExecutives((state: any) => state.level)
-  const label = useFetchExecutives((state: any) => state.label)
+  const session = useFetchExecutives((state) => state.session)
+  const department = useFetchExecutives((state) => state.department)
+  const level = useFetchExecutives((state) => state.level)
+  const label = useFetchExecutives((state) => state.label)
   const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
 
-  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data: any) => {
+  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data) => {
       if (level === 'DEPARTMENT') {
         setAccomplishments(data?.departmentAccomplishments)
       }
     }})
-  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data: any) => {
+  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
       if (level === 'FACULTY') {
         setAccomplishments(data?.facultyAccomplishments)
       }
@@ -32,6 +33,7 @@ const Accomplishment = () => {
   const navigate = useNavigate()
 
   console.log(departmentAccomplishment, facultyAccomplishment)
+
   const settings = {
     dots: true,
     autoplay: true,
@@ -84,7 +86,7 @@ const Accomplishment = () => {
         <div className="p-5">
         <Slider {...settings}>
           {
-            accomplishments?.map((accomplishment: any) => (
+            accomplishments?.map((accomplishment: Accomplishment) => (
                 <button key={accomplishment?.id} onClick={() => handleOpen(accomplishment?.description)}>
                   <div className="flex flex-col space-y-3 justify-center items-center">
                   <img src={accomplishment?.imageUrl} alt="" className="w-72 h-64 object-cover  rounded-md" />

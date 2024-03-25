@@ -5,15 +5,16 @@ import FacultyAndDepartmentExecutive from '@/components/FacultyAndDepartmentExec
 import { useQuery } from '@apollo/client';
 import { FACULTY_PRESIDENTS, SESSION_FACULTY_PRESIDENT } from '@/graphql/queries/executives'
 import { useEffect, useState } from 'react'
+import { Official } from '@/types'
 
 
 
 
 const HomePage = () => {
-	const hierarchy = useFilter((state: any) => state.hierarchy)
-	const session = useFilter((state: any) => state.session)
+	const hierarchy = useFilter((state) => state.hierarchy)
+	const session = useFilter((state) => state.session)
 
-	const [defaultOfficials, setDefaultOfficials] = useState<any>([])
+	const [defaultOfficials, setDefaultOfficials] = useState<Official[]>([])
   const { data: facultyDepartmentPresident, loading: facultyDepartmentPresidentLoading } = useQuery(FACULTY_PRESIDENTS, {
   })
   const { data: sessionFacultyDepartmentPresident, loading: sessionFacultyDepartmentPresidentLoading } = useQuery(SESSION_FACULTY_PRESIDENT, {

@@ -32,9 +32,9 @@ const Header = () => {
   const [search, setSearch] = useState('')
   const [hierarchy, setHierarchy] = useState('None')
   const [session, setSession] = useState('')
-  const storeHierarchy = useFilter((state: any) => state.storeHierarchy)
-  const storeSession = useFilter((state: any) => state.storeSession)
-  const storeSearchTerm = useFilter((state: any) => state.storeSearchTerm)
+  const storeHierarchy = useFilter((state) => state.storeHierarchy)
+  const storeSession = useFilter((state) => state.storeSession)
+  const storeSearchTerm = useFilter((state) => state.storeSearchTerm)
   const { data: sessions } = useQuery(GET_SESSIONS)
   const navigate = useNavigate()
 

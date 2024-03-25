@@ -1,6 +1,4 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-// import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-// import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { useFetchExecutives } from '@/store'
 import { useQuery } from '@apollo/client'
 import { FACULTY_MEMBERS, DEPARTMENT_MEMBERS } from '@/graphql/queries/executives'
@@ -9,20 +7,21 @@ import { useState } from 'react'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import useMedia from '@/hook/useMedia'
 import { Box, Skeleton } from '@mui/material';
+import { ExecutiveMembers, Official, Session } from '@/types'
 
 
 const ExecutiveDetail = () => {
-  const setSession = useFetchExecutives((state: any) => state.setSession)
-	const setLevel = useFetchExecutives((state: any) => state.setLevel)
-	const setLabel = useFetchExecutives((state: any) => state.setLabel)
-	// const setDepartment = useFetchExecutives((state: any) => state.setDepartment)
-  const session = useFetchExecutives((state: any) => state.session)
-  const level = useFetchExecutives((state: any) => state.level)
-  const label = useFetchExecutives((state: any) => state.label)
-  const department = useFetchExecutives((state: any) => state.department)
-  const [executives, setExecutives] = useState<any>({
-    president: {},
-    vicePresident: {},
+  const setSession = useFetchExecutives((state) => state.setSession)
+	const setLevel = useFetchExecutives((state) => state.setLevel)
+	const setLabel = useFetchExecutives((state) => state.setLabel)
+	// const setDepartment = useFetchExecutives((state) => state.setDepartment)
+  const session = useFetchExecutives((state) => state.session)
+  const level = useFetchExecutives((state) => state.level)
+  const label = useFetchExecutives((state) => state.label)
+  const department = useFetchExecutives((state) => state.department)
+  const [executives, setExecutives] = useState<ExecutiveMembers>({
+    president: null,
+    vicePresident: null,
     otherExecutives: [],
   })
   const { loading: facultyExecutivesLoading } = useQuery(FACULTY_MEMBERS, {
@@ -59,7 +58,7 @@ const ExecutiveDetail = () => {
 
   const navigate = useNavigate()
 
-  const displayFacultyAccomplishment = (session: any) => {
+  const displayFacultyAccomplishment = (session: Session) => {
 		setSession({
 			id: session?.id,
 			session: session?.session
@@ -69,13 +68,11 @@ const ExecutiveDetail = () => {
 		navigate('/department/accomplishment')
 	}
 
-	const displayDepartmentAccomplishment = (department: any) => {
+	const displayDepartmentAccomplishment = () => {
     setSession({
 			id: session?.id,
 			session: session?.session
 		})
-    console.log(department)
-    console.log(session)
 		navigate('/department/accomplishment')	
 	}
 
@@ -91,7 +88,7 @@ const ExecutiveDetail = () => {
         </div>
         <div className="flex space-x-10 items-center">
           <span className="font-bold text-sm lg:text-lg">{session?.session}</span>
-          <button onClick={() => level === 'FACULTY' ? displayFacultyAccomplishment(session) : displayDepartmentAccomplishment(department) } className="border-[#2CC84A] hidden lg:flex text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
+          <button onClick={() => level === 'FACULTY' ? displayFacultyAccomplishment(session) : displayDepartmentAccomplishment() } className="border-[#2CC84A] hidden lg:flex text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
             Accomplishment
           </button>
         </div>
@@ -162,7 +159,7 @@ const ExecutiveDetail = () => {
           ) : (
           <tbody className="flex space-y-4 flex-col">
             {
-              executives?.otherExecutives?.map((executive: any) => (
+              executives?.otherExecutives?.map((executive: Official) => (
               <tr className=" flex lg:justify-between  bg-white lg:p-5 p-3 items-center rounded-xl lg:px-16">
                 <td className="lg:w-3/5 w-[200px] flex lg:flex-row flex-col justify-center lg:justify-start space-x-3 items-start lg:items-center">
                 <div className="p-1 border border-[#2CC84A] rounded-full ml-8 lg:ml-0">
