@@ -72,10 +72,10 @@ type ExecutiveMembers = {
   otherExecutives: Official[]
 }
 
-type Accomplishment = {
+type AccomplishmentType = {
   id: string
   description: string
   imageUrl: string
 }
 
-export type { Official, Session, Department, Position, useFetchExecutiveStore, useFilterStore, useSetOfficialsStore, ExecutiveMembers, Accomplishment }
+export type { Official, Session, Department, Position, useFetchExecutiveStore, useFilterStore, useSetOfficialsStore, ExecutiveMembers, AccomplishmentType }

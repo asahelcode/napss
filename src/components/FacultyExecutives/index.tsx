@@ -20,9 +20,6 @@ const FacultyExecutives = ({ session, hierarchy }: FacultyExecutivesProp ) => {
 		}
 	})
   
-
-
-	// console.log(facultyPresidentAndVicePresident?.sessions)
 		useEffect(() => {
 		if( hierarchy === 'FACULTY' && session === '') {
 			setFacultyOfficials(facultyPresidentAndVicePresident?.sessions)

@@ -1,7 +1,7 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useFetchExecutives } from '@/store'
 import { useQuery } from '@apollo/client'
-import { FACULTY_MEMBERS, DEPARTMENT_MEMBERS } from '@/graphql/queries/executives'
+import { FACULTY_MEMBERS } from '@/graphql/queries/executives'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
@@ -14,11 +14,9 @@ const ExecutiveDetail = () => {
   const setSession = useFetchExecutives((state) => state.setSession)
 	const setLevel = useFetchExecutives((state) => state.setLevel)
 	const setLabel = useFetchExecutives((state) => state.setLabel)
-	// const setDepartment = useFetchExecutives((state) => state.setDepartment)
   const session = useFetchExecutives((state) => state.session)
   const level = useFetchExecutives((state) => state.level)
   const label = useFetchExecutives((state) => state.label)
-  const department = useFetchExecutives((state) => state.department)
   const [executives, setExecutives] = useState<ExecutiveMembers>({
     president: null,
     vicePresident: null,
@@ -39,22 +37,6 @@ const ExecutiveDetail = () => {
 
 	const isSmallScreen = useMedia('(max-width: 600px)');
 
-  const { loading: departmentExecutivesLoading } = useQuery(DEPARTMENT_MEMBERS, {
-    variables: { sessionId: session?.id, departmentId: department?.id },
-    onCompleted: (data) => {
-      if(level === 'DEPARTMENT') {
-        const president = data?.departmentOfficials?.filter((member: any) => member?.position?.position === 'President')[0]
-        const vicePresident = data?.departmentOfficials?.filter((member: any) => member?.position?.position === 'Vice President')[0]
-        const otherExecutives = data?.departmentOfficials?.filter((member: any) => member?.position?.position !== 'President' && member?.position?.position !== 'Vice President')
-  
-        setExecutives({
-          president,
-          vicePresident,
-          otherExecutives
-        })
-      }
-    }
-  });
 
   const navigate = useNavigate()
 
@@ -68,27 +50,19 @@ const ExecutiveDetail = () => {
 		navigate('/department/accomplishment')
 	}
 
-	const displayDepartmentAccomplishment = () => {
-    setSession({
-			id: session?.id,
-			session: session?.session
-		})
-		navigate('/department/accomplishment')	
-	}
-
-
   return (
     <>
-      <div className="w-full p-7 bg-white flex justify-between items-center px-10 font-manrope">
+      <div className="w-full p-7 bg-white flex lg:justify-between justify-around items-center lg:px-10  font-manrope">
         <div className=" flex items-center lg:space-x-4 space-x-2">
           <button onClick={() => navigate('/')}>
           <KeyboardBackspaceIcon className="text-[#2CC84A] border-2 border-[#2CC84A] p-1 rounded-full" fontSize={`${isSmallScreen ? "medium" : "large"}`}/>
             </button>
-          <span className="lg:text-2xl text-sm font-bold pl-5 w-44 lg:w-full">{label}</span>
+          <div className="lg:text-2xl text-sm font-bold pl-5 w-44  flex lg:hidden lg:w-full">{session?.session}</div>
+          <div className="lg:text-2xl text-sm font-bold pl-5 w-44 hidden lg:flex lg:w-full">{label}</div>
         </div>
-        <div className="flex space-x-10 items-center">
-          <span className="font-bold text-sm lg:text-lg">{session?.session}</span>
-          <button onClick={() => level === 'FACULTY' ? displayFacultyAccomplishment(session) : displayDepartmentAccomplishment() } className="border-[#2CC84A] hidden lg:flex text-[#2CC84A] border p-2 rounded-md px-4 font-medium shadow-md">
+        <div className="flex lg:space-x-10 space-x-2 items-center">
+          <span className="font-bold hidden lg:flex text-sm lg:text-lg">{session?.session}</span>
+          <button onClick={() => displayFacultyAccomplishment(session) } className="border-[#2CC84A] lg:flex text-[#2CC84A] border p-2 rounded-md lg:px-4 px-2 font-medium text-sm shadow-md">
             Accomplishment
           </button>
         </div>
@@ -98,7 +72,7 @@ const ExecutiveDetail = () => {
       <div className="flex flex-col space-y-3">
       <span className="font-semibold hidden lg:flex">Name and Position</span>
       {
-        (facultyExecutivesLoading  || departmentExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
+        (facultyExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
         <>
           <div className="bg-white p-4 flex w-[350px] rounded-lg space-x-4 items-center">
                 <div className="p-1 border border-[#2CC84A] rounded-full">
@@ -120,7 +94,7 @@ const ExecutiveDetail = () => {
       <div className="flex flex-col space-y-3 items-end justify-center">
         <span className="font-semibold hidden lg:flex">Name and Position</span>
       {
-        (facultyExecutivesLoading || departmentExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
+        (facultyExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
         <>
             <div className="bg-white p-4 flex w-[350px] rounded-lg space-x-4 justify-end items-center">
               <div className="flex flex-col items-end">
@@ -149,7 +123,7 @@ const ExecutiveDetail = () => {
           </tr>
         </thead>
         {
-          ( facultyExecutivesLoading  || departmentExecutivesLoading ) ? (
+          ( facultyExecutivesLoading) ? (
           <Box sx={{ width: '100%' }}>
             <Skeleton animation="wave" sx={{ height: 100 }}/>
             <Skeleton animation="wave" sx={{ height: 100 }}/>

@@ -71,8 +71,8 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: F
               </div>
       
 						</td>
-						<td className="text-center hidden lg:flex w-[80px] font-bold">{session?.session}</td>
-						<td>
+						<td className="text-center lg:flex lg:w-[80px] text-xs lg:font-bold font-medium">{session?.session}</td>
+						<td className="lg:flex hidden">
 							<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md" >
 												{isSmallScreen ? 'feat' : 'Accomplishment'}
