@@ -1,5 +1,5 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { GET_DEPARTMENT_ACCOMPLISHMENTS, GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
+import {GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
 import Slider from "react-slick";
 import { useQuery } from '@apollo/client'
 import { useFetchExecutives } from '@/store'
@@ -9,21 +9,15 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useMedia from '@/hook/useMedia'
 import Box from '@mui/material/Box';
+import { AccomplishmentType } from '@/types'
 
 const Accomplishment = () => {
-  const session = useFetchExecutives((state: any) => state.session)
-  const department = useFetchExecutives((state: any) => state.department)
-  const level = useFetchExecutives((state: any) => state.level)
-  const label = useFetchExecutives((state: any) => state.label)
+  const session = useFetchExecutives((state) => state.session)
+  const level = useFetchExecutives((state) => state.level)
   const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
 
-  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data: any) => {
-      if (level === 'DEPARTMENT') {
-        setAccomplishments(data?.departmentAccomplishments)
-      }
-    }})
-  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data: any) => {
+  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
       if (level === 'FACULTY') {
         setAccomplishments(data?.facultyAccomplishments)
       }
@@ -31,7 +25,8 @@ const Accomplishment = () => {
   const [description, setDescription] = useState('')
   const navigate = useNavigate()
 
-  console.log(departmentAccomplishment, facultyAccomplishment)
+  console.log(facultyAccomplishment)
+
   const settings = {
     dots: true,
     autoplay: true,
@@ -68,15 +63,15 @@ const Accomplishment = () => {
 
 
   return (
-    <div className="flex flex-col space-y-10">
-      <div className="w-full p-7 bg-white flex justify-between items-center px-5 lg:px-10">
-        <div className=" flex items-center lg:space-x-4 space-x-2">
+    <div className="flex flex-col space-y-10 font-manrope">
+      <div className="w-full p-7 bg-white flex lg:justify-between justify-between items-center px-5 lg:px-10">
+        <div className="flex items-center lg:space-x-4 space-x-2">
           <button onClick={() => navigate(-1)}>
              <KeyboardBackspaceIcon className="text-[#2CC84A] border-2 border-[#2CC84A] p-1 rounded-full" fontSize={`${isSmallScreen ? "medium" : "large"}`}/>
           </button>
-          <span className="lg:text-2xl text-sm font-bold pl-5">{label} Accomplishment</span>
+          <span className="lg:text-2xl text-sm font-bold pl-5">Accomplishments</span>
         </div>
-        <div className="flex lg:space-x-10 items-center w-32">
+        <div className="flex items-center lg:w-32">
           <span className="font-bold text-sm lg:text-lg">{session?.session}</span>
         </div>
     </div>
@@ -84,7 +79,7 @@ const Accomplishment = () => {
         <div className="p-5">
         <Slider {...settings}>
           {
-            accomplishments?.map((accomplishment: any) => (
+            accomplishments?.map((accomplishment: AccomplishmentType) => (
                 <button key={accomplishment?.id} onClick={() => handleOpen(accomplishment?.description)}>
                   <div className="flex flex-col space-y-3 justify-center items-center">
                   <img src={accomplishment?.imageUrl} alt="" className="w-72 h-64 object-cover  rounded-md" />

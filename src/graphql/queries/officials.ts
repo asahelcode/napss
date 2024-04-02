@@ -9,15 +9,6 @@ const GET_SESSIONS = gql`
 }
 `
 
-const GET_DEPARTMENT_ACCOMPLISHMENTS = gql`
-  query($departmentId: String!, $sessionId: String!) {
-  departmentAccomplishments(departmentId: $departmentId, sessionId: $sessionId) {
-    id
-    description
-    imageUrl
-  }
-}
-`
 
 const GET_FACULTY_ACCOMPLISHMENTS = gql`
   query($sessionId: String!) {
@@ -50,4 +41,4 @@ const SEARCH_OFFICIAL = gql`
 }
 `
 
-export { GET_SESSIONS, GET_DEPARTMENT_ACCOMPLISHMENTS, GET_FACULTY_ACCOMPLISHMENTS, SEARCH_OFFICIAL}
+export { GET_SESSIONS,  GET_FACULTY_ACCOMPLISHMENTS, SEARCH_OFFICIAL}
