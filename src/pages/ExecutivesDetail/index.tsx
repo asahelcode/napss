@@ -60,7 +60,7 @@ const ExecutiveDetail = () => {
           <div className="lg:text-2xl text-sm font-bold pl-5 w-44  flex lg:hidden lg:w-full">{session?.session}</div>
           <div className="lg:text-2xl text-sm font-bold pl-5 w-44 hidden lg:flex lg:w-full">{label}</div>
         </div>
-        <div className="flex lg:space-x-10 space-x-2 items-center">
+        <div className="flex lg:space-x-10 items-center">
           <span className="font-bold hidden lg:flex text-sm lg:text-lg">{session?.session}</span>
           <button onClick={() => displayFacultyAccomplishment(session) } className="border-[#2CC84A] lg:flex text-[#2CC84A] border p-2 rounded-md lg:px-4 px-2 font-medium text-sm shadow-md">
             Accomplishment

@@ -55,8 +55,8 @@ const SearchPage = () => {
 				<thead className="w-full">
 					<tr className="text-[#2CC84A] flex lg:justify-around justify-around lg:w-full space-x-3 px-2 lg:px-0">
 						<td className="lg:w-[320px] w-[50%] text-sm ">Executive</td>
-						<td className="lg:w-[120px] text-sm hidden lg:flex">Session</td>
-						<td className="lg:w-[100px] text-sm ">Record</td>
+						<td className="lg:w-[120px] text-sm flex lg:hidden">Session</td>
+						<td className="lg:w-[100px] text-sm hidden lg:flex">Record</td>
 						<td className=" text-sm ">Status</td>
 						<td className=" text-sm ">More</td>
 					</tr>
@@ -85,16 +85,14 @@ const SearchPage = () => {
               </div>
       
 						</td>
-						<td className="text-center hidden lg:flex w-[80px] font-bold">{official?.session?.session}</td>
+						<td className="text-center lg:hidden flex lg:w-[80px] text-xs font-bold">{official?.session?.session}</td>
 						<td>
-              {
-                official?.level == 'FACULTY' && (
-                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+        
+                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] hidden lg:flex text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md">
 												{isSmallScreen ? 'feat' : 'Accomplishment'}
 </button>
-                )
-              }
+           
 						</td>
 						<td>
 							<FiberManualRecordRoundedIcon className={`${official?.session?.status ? 'text-green-500' : 'text-gray-300'}`}/>

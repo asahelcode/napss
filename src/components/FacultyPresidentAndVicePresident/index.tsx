@@ -42,7 +42,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: F
 
   return (
     <>
-					<tr className="flex lg:justify-around lg:items-center justify-around items-center space-x-2 font-manrope">
+					<tr className="flex  lg:items-center justify-around items-center lg:space-x-2 font-manrope">
 						<td className="flex space-x-2 items-start z-20 w-[170px] lg:w-[300px] flex-col lg:space-y-7 space-y-3">
               <div className="flex items-start  lg:items-center gap-4">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
@@ -56,8 +56,8 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: F
 								</div>
 							</div>
               </div>
-              <img src={Line} alt="" className="absolute h-16 w-16 left-[12px] top-[60px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em] -z-20"/>
-              <div className="flex lg:pl-10 pl-7 lg:items-center items-start lg:gap-4 gap-2">
+              <img src={Line} alt="" className="absolute h-14 w-16 left-[14px] top-[60px] lg:left-[3.2rem] lg:flex lg:w-16 lg:h-16 lg:top-[5em] -z-20"/>
+              <div className="flex lg:pl-10 pl-7 lg:items-center items-start z-20 lg:gap-4 gap-2">
 							<div className="p-1 border border-[#2CC84A] rounded-full">
 							<img src={vicePresident?.studentImage}  alt="" className="lg:w-16 w-10 h-10 lg:h-16 object-fill rounded-full"/>
 							</div>
@@ -71,7 +71,11 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: F
               </div>
       
 						</td>
-						<td className="text-center lg:flex lg:w-[80px] text-xs lg:font-bold font-medium">{session?.session}</td>
+						<td className="text-center lg:flex lg:w-[80px] lg:font-bold font-bold ">
+							<span className="text-[9px] whitespace-normal h-full w-full">
+								{session?.session}
+							</span>
+						</td>
 						<td className="lg:flex hidden">
 							<button onClick={() => displayFacultyAccomplishment(session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md" >
