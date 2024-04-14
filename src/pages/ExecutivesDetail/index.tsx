@@ -1,9 +1,9 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useFetchExecutives } from '@/store'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { FACULTY_MEMBERS } from '@/graphql/queries/executives'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import useMedia from '@/hook/useMedia'
 import { Box, Skeleton } from '@mui/material';
@@ -22,7 +22,7 @@ const ExecutiveDetail = () => {
     vicePresident: null,
     otherExecutives: [],
   })
-  const { loading: facultyExecutivesLoading } = useQuery(FACULTY_MEMBERS, {
+  const [ facultyExecutives, { loading: facultyExecutivesLoading } ] = useLazyQuery(FACULTY_MEMBERS, {
     variables: { sessionId: session?.id },
     onCompleted: (data) => {
       if (level === 'FACULTY') {
@@ -49,6 +49,10 @@ const ExecutiveDetail = () => {
 		setLevel('FACULTY')
 		navigate('/department/accomplishment')
 	}
+
+  useEffect(() => {
+    facultyExecutives()
+  }, [facultyExecutives])
 
   return (
     <>

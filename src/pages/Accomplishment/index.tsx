@@ -1,9 +1,9 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import {GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
 import Slider from "react-slick";
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { useFetchExecutives } from '@/store'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -17,7 +17,7 @@ const Accomplishment = () => {
   const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
 
-  const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
+  const [ triggerFacultyAccomplishment,  { data: facultyAccomplishment} ] = useLazyQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
       if (level === 'FACULTY') {
         setAccomplishments(data?.facultyAccomplishments)
       }
@@ -60,6 +60,10 @@ const Accomplishment = () => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  useEffect(() => {
+    triggerFacultyAccomplishment()
+  }, [triggerFacultyAccomplishment])
 
 
   return (
