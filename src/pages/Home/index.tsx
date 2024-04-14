@@ -1,10 +1,6 @@
 import { useFilter, } from '@/store';
 import FacultyExecutives from '@/components/FacultyExecutives'
 
-
-
-
-
 const HomePage = () => {
 	const session = useFilter((state) => state.session)
 	return (

@@ -72,7 +72,7 @@ const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: F
       
 						</td>
 						<td className="text-center lg:flex lg:w-[80px] lg:font-bold font-bold ">
-							<span className="text-[9px] whitespace-normal h-full w-full">
+							<span className="text-[9px] lg:text-lg whitespace-normal h-full w-full">
 								{session?.session}
 							</span>
 						</td>
