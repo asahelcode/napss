@@ -7,9 +7,6 @@ import { FACULTY_PRESIDENTS, SESSION_FACULTY_PRESIDENT } from '@/graphql/queries
 import { useEffect, useState } from 'react'
 import { Official } from '@/types'
 
-
-
-
 const HomePage = () => {
 	const hierarchy = useFilter((state) => state.hierarchy)
 	const session = useFilter((state) => state.session)
