@@ -30,19 +30,13 @@ import { Session } from '@/types'
 
 const Header = () => {
   const [search, setSearch] = useState('')
-  const [hierarchy, setHierarchy] = useState('None')
   const [session, setSession] = useState('')
-  const storeHierarchy = useFilter((state) => state.storeHierarchy)
   const storeSession = useFilter((state) => state.storeSession)
   const storeSearchTerm = useFilter((state) => state.storeSearchTerm)
   const { data: sessions } = useQuery(GET_SESSIONS)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(hierarchy) {
-      storeHierarchy(hierarchy)
-    }
-
     if(session) {
       storeSession(session)
     }
@@ -51,7 +45,7 @@ const Header = () => {
       setSession('')
       storeSession('')
     }
-  }, [hierarchy, navigate, search, session, storeHierarchy, storeSearchTerm, storeSession])
+  }, [navigate, search, session, storeSearchTerm, storeSession])
 
   const debounced = useDebouncedCallback(
     (term) => {
@@ -91,7 +85,7 @@ const Header = () => {
           </DrawerHeader>
           <div className="p-4 pb-0">
             <div className="lg:flex space-x-10 flex w-full">
-          <Select onValueChange={setHierarchy} value={hierarchy}>
+          {/* <Select onValueChange={setHierarchy} value={hierarchy}>
              <SelectTrigger className="w-[180px]">
                <SelectValue placeholder="None" />
              </SelectTrigger>
@@ -100,9 +94,9 @@ const Header = () => {
                <SelectItem value="DEPARTMENT">Department</SelectItem>
                <SelectItem value="FACULTY">Faculty</SelectItem>
              </SelectContent>
-          </Select>
+          </Select> */}
           <Select value={session} onValueChange={setSession}>
-             <SelectTrigger className="w-[180px]">
+             <SelectTrigger className="w-[100%]">
                <SelectValue placeholder="Session" />
              </SelectTrigger>
              <SelectContent>
@@ -129,7 +123,7 @@ const Header = () => {
           </div>
         </div>
         <div className="lg:flex space-x-10 hidden">
-          <Select onValueChange={setHierarchy} value={hierarchy}>
+          {/* <Select onValueChange={setHierarchy} value={hierarchy}>
              <SelectTrigger className="w-[180px]">
                <SelectValue placeholder="None" />
              </SelectTrigger>
@@ -138,7 +132,7 @@ const Header = () => {
                <SelectItem value="DEPARTMENT">Department</SelectItem>
                <SelectItem value="FACULTY">Faculty</SelectItem>
              </SelectContent>
-          </Select>
+          </Select> */}
           <Select value={session} onValueChange={setSession}>
              <SelectTrigger className="w-[180px]">
                <SelectValue placeholder="Session" />

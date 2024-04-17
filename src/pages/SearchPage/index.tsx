@@ -17,7 +17,6 @@ const SearchPage = () => {
   const setSession = useFetchExecutives((state) => state.setSession)
 	const setLevel = useFetchExecutives((state) => state.setLevel)
 	const setLabel = useFetchExecutives((state) => state.setLabel)
-  const setDepartment = useFetchExecutives((state) => state.setDepartment)
   const navigate = useNavigate()
 	const isSmallScreen = useMedia('(max-width: 600px)');
 
@@ -37,20 +36,6 @@ const SearchPage = () => {
 		navigate('/executives/detail')
 	}
 
-	const displayDepartment = (session: Session, departmentId: string, departmentName: string) => {
-		setSession({
-			id: session?.id,
-			session: session?.session
-		})
-		setLabel(`Department of ${departmentName}`)
-		setDepartment({
-			id: departmentId,
-			department: departmentName
-		})
-		setLevel('DEPARTMENT')
-		navigate('/executives/detail')
-	}
-
   const displayFacultyAccomplishment = (session: Session) => {
 		setSession({
 			id: session?.id,
@@ -61,21 +46,6 @@ const SearchPage = () => {
 		navigate('/department/accomplishment')
 	}
 
-  const displayDepartmentAccomplishment = (session: Session, departmentId: string, departmentName: string) => {
-		setSession({
-			id: session?.id,
-			session: session?.session
-		})
-		setLabel(`Department of ${departmentName}`)
-		setDepartment({
-			id: departmentId,
-			department: departmentName
-		})
-		setLevel('DEPARTMENT')
-		navigate('/department/accomplishment')	
-	}
-
-
   return (
     <>
     <div className="w-full p-7 bg-white flex justify-center items-center px-10 font-sora">
@@ -85,8 +55,8 @@ const SearchPage = () => {
 				<thead className="w-full">
 					<tr className="text-[#2CC84A] flex lg:justify-around justify-around lg:w-full space-x-3 px-2 lg:px-0">
 						<td className="lg:w-[320px] w-[50%] text-sm ">Executive</td>
-						<td className="lg:w-[120px] text-sm hidden lg:flex">Session</td>
-						<td className="lg:w-[100px] text-sm ">Record</td>
+						<td className="lg:w-[120px] text-sm flex lg:hidden">Session</td>
+						<td className="lg:w-[100px] text-sm hidden lg:flex">Record</td>
 						<td className=" text-sm ">Status</td>
 						<td className=" text-sm ">More</td>
 					</tr>
@@ -110,35 +80,19 @@ const SearchPage = () => {
 								<span className="lg:text-lg text-xs font-extrabold">{official?.studentName}</span>
 								<div className="flex flex-col">
 									<span className="text-gray-500 text-xs font-semibold">{official?.position?.position}</span>
-									<div className="text-gray-500 text-xs font-semibold">
-                    {official?.level === 'FACULTY' && "FACULTY" }
-                    {official?.level === 'DEPARTMENT' && `${official?.department?.name}`}
-                    </div>
 								</div>
 							</div>
               </div>
       
 						</td>
-						<td className="text-center hidden lg:flex w-[80px] font-bold">{official?.session?.session}</td>
+						<td className="text-center lg:hidden flex lg:w-[80px] text-xs font-bold">{official?.session?.session}</td>
 						<td>
-              {
-                official?.level == 'FACULTY' && (
-                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
+        
+                  <button onClick={() => displayFacultyAccomplishment(official?.session)} className="border-[#2CC84A] hidden lg:flex text-[#2CC84A] border lg:p-2 
 							p-1 rounded-md lg:px-4 font-medium shadow-md">
 												{isSmallScreen ? 'feat' : 'Accomplishment'}
 </button>
-                )
-              }
-
-              {
-                official?.level == 'DEPARTMENT' && (
-                  <button className="border-[#2CC84A] text-[#2CC84A] border lg:p-2 
-							p-1 rounded-md lg:px-4 font-medium shadow-md" onClick={() => displayDepartmentAccomplishment(official?.session, official?.department?.id, official?.department?.name)}>
-																				{isSmallScreen ? 'feat' : 'Accomplishment'}
-
-							</button>
-                )
-              }
+           
 						</td>
 						<td>
 							<FiberManualRecordRoundedIcon className={`${official?.session?.status ? 'text-green-500' : 'text-gray-300'}`}/>
@@ -149,13 +103,6 @@ const SearchPage = () => {
                   <button onClick={() => displayFacultyMembers(official?.session)}>
 									<ArrowRightAltIcon className="text-[#2CC84A]"/>
 </button>
-                )
-              }
-              {
-                official?.level === 'DEPARTMENT' && (
-                   <button onClick={() => displayDepartment(official?.session, official?.department?.id, official?.department?.name)}>
-                    <ArrowRightAltIcon className="text-[#2CC84A]"/>
-                  </button>
                 )
               }
               </td>

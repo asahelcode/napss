@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { FACULTY_PRESIDENT_AND_VICE_PRESIDENTS, SESSION_FACULTY_PRESIDENT_AND_VICE_PRESIDENT } from '@/graphql/queries/executives'
 import { useEffect, useState } from 'react'
 import FacultyPresidentAndVicePresident from '@/components/FacultyPresidentAndVicePresident'
@@ -13,16 +13,24 @@ interface FacultyExecutivesProp {
 const FacultyExecutives = ({ session, hierarchy }: FacultyExecutivesProp ) => {
 	const [facultyOfficials, setFacultyOfficials] = useState<any>()
 
-	const { data: facultyPresidentAndVicePresident, loading: facultyPresidentAndVicePresidentLoading } = useQuery(FACULTY_PRESIDENT_AND_VICE_PRESIDENTS)
-	const { data: facultyPresidentAndVicePresidentFilter, loading: facultyPresidentAndVicePresidentFilterLoading } = useQuery(SESSION_FACULTY_PRESIDENT_AND_VICE_PRESIDENT, {
-		variables: {
-			sessionId: session
-		}
-	})
+	const [
+        getFacultyPresidentAndVicePresidents,
+        { data: facultyPresidentAndVicePresident, loading: facultyPresidentAndVicePresidentLoading }
+    ] = useLazyQuery(FACULTY_PRESIDENT_AND_VICE_PRESIDENTS);
+
+    // Lazy load the second query with variables
+    const [
+        getFacultyPresidentAndVicePresidentsFilter,
+        { data: facultyPresidentAndVicePresidentFilter, loading: facultyPresidentAndVicePresidentFilterLoading }
+    ] = useLazyQuery(SESSION_FACULTY_PRESIDENT_AND_VICE_PRESIDENT, {
+        variables: { sessionId: session }
+    });
+		
+		useEffect(() => {
+			getFacultyPresidentAndVicePresidents();
+			getFacultyPresidentAndVicePresidentsFilter();
+		}, [getFacultyPresidentAndVicePresidents, getFacultyPresidentAndVicePresidentsFilter])
   
-
-
-	// console.log(facultyPresidentAndVicePresident?.sessions)
 		useEffect(() => {
 		if( hierarchy === 'FACULTY' && session === '') {
 			setFacultyOfficials(facultyPresidentAndVicePresident?.sessions)
