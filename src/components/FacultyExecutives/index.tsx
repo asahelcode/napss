@@ -13,6 +13,7 @@ const FacultyExecutives = ({ session, hierarchy }: FacultyExecutivesProp ) => {
 	const [facultyOfficials, setFacultyOfficials] = useState<any>()
 	const {data: testData, isLoading } = useSWR('faculty/sessions/leaders')
 
+	console.log(testData)
 	useEffect(() => {
 		if( hierarchy === 'FACULTY' && session === '') {
 			setFacultyOfficials(testData)

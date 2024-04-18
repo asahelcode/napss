@@ -110,7 +110,7 @@ const Header = () => {
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
-              <Button>Cancel</Button>
+              <Button>{session !== '' ? 'Ok' : 'Cancel'}</Button>
             </DrawerClose>
           </DrawerFooter>
         </div>
