@@ -12,7 +12,6 @@ type FacultyPresidentAndVicePresidentProp = {
 	session: Session
 }
 
-
 const FacultyPresidentAndVicePresident = ({president, vicePresident, session}: FacultyPresidentAndVicePresidentProp) => {
 	const setSession = useFetchExecutives((state) => state.setSession)
 	const setLevel = useFetchExecutives((state) => state.setLevel)

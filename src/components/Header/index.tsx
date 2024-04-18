@@ -9,8 +9,6 @@ import {
 import { useFilter } from '@/store';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
-import { GET_SESSIONS } from '@/graphql/queries/officials';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -24,7 +22,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-
+import useSWR from 'swr'
 import { Session } from '@/types'
 
 
@@ -33,8 +31,8 @@ const Header = () => {
   const [session, setSession] = useState('')
   const storeSession = useFilter((state) => state.storeSession)
   const storeSearchTerm = useFilter((state) => state.storeSearchTerm)
-  const { data: sessions } = useQuery(GET_SESSIONS)
   const navigate = useNavigate()
+  const { data: sessions } = useSWR('sessions')
 
   useEffect(() => {
     if(session) {
@@ -102,7 +100,7 @@ const Header = () => {
              <SelectContent>
                <SelectItem value="session">Session</SelectItem>
                {
-                sessions?.sessions?.map((session: Session) => (
+                sessions?.map((session: Session) => (
                   <SelectItem value={session?.id}>{session?.session}</SelectItem>
                 ))
                }
@@ -123,16 +121,6 @@ const Header = () => {
           </div>
         </div>
         <div className="lg:flex space-x-10 hidden">
-          {/* <Select onValueChange={setHierarchy} value={hierarchy}>
-             <SelectTrigger className="w-[180px]">
-               <SelectValue placeholder="None" />
-             </SelectTrigger>
-             <SelectContent>
-               <SelectItem value="None">None</SelectItem>
-               <SelectItem value="DEPARTMENT">Department</SelectItem>
-               <SelectItem value="FACULTY">Faculty</SelectItem>
-             </SelectContent>
-          </Select> */}
           <Select value={session} onValueChange={setSession}>
              <SelectTrigger className="w-[180px]">
                <SelectValue placeholder="Session" />
@@ -140,7 +128,7 @@ const Header = () => {
              <SelectContent>
                <SelectItem value="session">Session</SelectItem>
                {
-                sessions?.sessions?.map((session: Session) => (
+                sessions?.map((session: Session) => (
                   <SelectItem value={session?.id}>{session?.session}</SelectItem>
                 ))
                }

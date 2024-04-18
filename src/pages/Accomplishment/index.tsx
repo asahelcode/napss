@@ -1,36 +1,27 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
 import Slider from "react-slick";
-import { useLazyQuery } from '@apollo/client'
 import { useFetchExecutives } from '@/store'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import useMedia from '@/hook/useMedia'
 import Box from '@mui/material/Box';
 import { AccomplishmentType } from '@/types'
+import useSWR from 'swr';
 
 const Accomplishment = () => {
   const session = useFetchExecutives((state) => state.session)
-  const level = useFetchExecutives((state) => state.level)
+  // const level = useFetchExecutives((state) => state.level)
   const isSmallScreen = useMedia('(max-width: 600px)');
-  const [accomplishments, setAccomplishments] = useState([])
-
-  const [ triggerFacultyAccomplishment,  { data: facultyAccomplishment} ] = useLazyQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data) => {
-      if (level === 'FACULTY') {
-        setAccomplishments(data?.facultyAccomplishments)
-      }
-    }})
+  const { data: accomplishments } = useSWR(`accomplishments/${session?.id}`)
   const [description, setDescription] = useState('')
   const navigate = useNavigate()
-
-  console.log(facultyAccomplishment)
 
   const settings = {
     dots: true,
     autoplay: true,
-    infinite: accomplishments.length > 3,
+    infinite: accomplishments && accomplishments.length > 3,
     touchMove: true,
     speed: 500,
     slidesToShow: isSmallScreen ? 1 : 3,
@@ -61,11 +52,6 @@ const Accomplishment = () => {
     setOpen(false)
   }
 
-  useEffect(() => {
-    triggerFacultyAccomplishment()
-  }, [triggerFacultyAccomplishment])
-
-
   return (
     <div className="flex flex-col space-y-10 font-manrope">
       <div className="w-full p-7 bg-white flex lg:justify-between justify-between items-center px-5 lg:px-10">
@@ -83,7 +69,7 @@ const Accomplishment = () => {
         <div className="p-5">
         <Slider {...settings}>
           {
-            accomplishments?.map((accomplishment: AccomplishmentType) => (
+            accomplishments && accomplishments?.map((accomplishment: AccomplishmentType) => (
                 <button key={accomplishment?.id} onClick={() => handleOpen(accomplishment?.description)}>
                   <div className="flex flex-col space-y-3 justify-center items-center">
                   <img src={accomplishment?.imageUrl} alt="" className="w-72 h-64 object-cover  rounded-md" />
