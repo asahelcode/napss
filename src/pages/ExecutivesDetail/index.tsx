@@ -1,13 +1,14 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useFetchExecutives } from '@/store'
-import { useLazyQuery } from '@apollo/client'
-import { FACULTY_MEMBERS } from '@/graphql/queries/executives'
+// import { FACULTY_MEMBERS } from '@/graphql/queries/executives'
+// import { useLazyQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import useMedia from '@/hook/useMedia'
 import { Box, Skeleton } from '@mui/material';
 import { ExecutiveMembers, Official, Session } from '@/types'
+import useSWR from 'swr';
 
 
 const ExecutiveDetail = () => {
@@ -22,20 +23,24 @@ const ExecutiveDetail = () => {
     vicePresident: null,
     otherExecutives: [],
   })
-  const [ facultyExecutives, { loading: facultyExecutivesLoading } ] = useLazyQuery(FACULTY_MEMBERS, {
-    variables: { sessionId: session?.id },
-    onCompleted: (data) => {
-      if (level === 'FACULTY') {
-        setExecutives({
-          president: data?.session?.president,
-          vicePresident: data?.session?.vicePresident,
-          otherExecutives: data?.session?.officials
-        });
-      }
-    },
-  });
+  const { data: facultyExecutives, isLoading } = useSWR(`faculty/session/${session?.id}/leaders/all`)
 
 	const isSmallScreen = useMedia('(max-width: 600px)');
+
+  console.log('🙂', executives)
+
+  useEffect(() => {
+    const president = facultyExecutives?.filter((executive: any) => executive?.position?.position === 'President')[0]
+    const vicePresident = facultyExecutives?.filter((executive: any) => executive?.position?.position === 'Vice President')[0]
+    const otherExecutives = facultyExecutives?.filter((executive: any) => executive?.position?.position !== 'President' && executive?.position?.position !== 'Vice President')
+
+    setExecutives({
+      president,
+      vicePresident,
+      otherExecutives
+    })
+  }, [facultyExecutives])
+
 
 
   const navigate = useNavigate()
@@ -49,10 +54,6 @@ const ExecutiveDetail = () => {
 		setLevel('FACULTY')
 		navigate('/department/accomplishment')
 	}
-
-  useEffect(() => {
-    facultyExecutives()
-  }, [facultyExecutives])
 
   return (
     <>
@@ -76,7 +77,7 @@ const ExecutiveDetail = () => {
       <div className="flex flex-col space-y-3">
       <span className="font-semibold hidden lg:flex">Name and Position</span>
       {
-        (facultyExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
+        ( isLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
         <>
           <div className="bg-white p-4 flex w-[350px] rounded-lg space-x-4 items-center">
                 <div className="p-1 border border-[#2CC84A] rounded-full">
@@ -98,7 +99,7 @@ const ExecutiveDetail = () => {
       <div className="flex flex-col space-y-3 items-end justify-center">
         <span className="font-semibold hidden lg:flex">Name and Position</span>
       {
-        (facultyExecutivesLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
+        ( isLoading ) ? <Skeleton animation="wave" sx={{ height: 100, width: '100%'}}/> : (
         <>
             <div className="bg-white p-4 flex w-[350px] rounded-lg space-x-4 justify-end items-center">
               <div className="flex flex-col items-end">
@@ -127,7 +128,7 @@ const ExecutiveDetail = () => {
           </tr>
         </thead>
         {
-          ( facultyExecutivesLoading) ? (
+          ( isLoading ) ? (
           <Box sx={{ width: '100%' }}>
             <Skeleton animation="wave" sx={{ height: 100 }}/>
             <Skeleton animation="wave" sx={{ height: 100 }}/>
