@@ -1,43 +1,30 @@
 import { useFilter, } from '@/store';
 import FacultyExecutives from '@/components/FacultyExecutives'
-import DepartmentExecutive from '@/components/DepartmentExecutive'
-import FacultyAndDepartmentExecutive from '@/components/FacultyAndDepartmentExecutive'
 import { useQuery } from '@apollo/client';
-import { FACULTY_PRESIDENTS, SESSION_FACULTY_PRESIDENT } from '@/graphql/queries/executives'
 import { useEffect, useState } from 'react'
-
-
-
 
 const HomePage = () => {
 	const hierarchy = useFilter((state: any) => state.hierarchy)
 	const session = useFilter((state: any) => state.session)
 
 	const [defaultOfficials, setDefaultOfficials] = useState<any>([])
-  const { data: facultyDepartmentPresident, loading: facultyDepartmentPresidentLoading } = useQuery(FACULTY_PRESIDENTS, {
-  })
-  const { data: sessionFacultyDepartmentPresident, loading: sessionFacultyDepartmentPresidentLoading } = useQuery(SESSION_FACULTY_PRESIDENT, {
-    variables: {
-      sessionId: session
-    },
-  })
 
-	useEffect(() => {
-		if (hierarchy === 'None' && session === '') {
-      setDefaultOfficials(facultyDepartmentPresident?.sessions)
-    } else if (session !== '' && hierarchy === 'None') {
-      const temp = []
-      temp.push(sessionFacultyDepartmentPresident?.session)
-      setDefaultOfficials(temp)
-    }
-  }, [facultyDepartmentPresident?.sessions, hierarchy, session, sessionFacultyDepartmentPresident?.session]);
+// 	useEffect(() => {
+// 		if (hierarchy === 'None' && session === '') {
+//       setDefaultOfficials(facultyDepartmentPresident?.sessions)
+//     } else if (session !== '' && hierarchy === 'None') {
+//       const temp = []
+//       temp.push(sessionFacultyDepartmentPresident?.session)
+//       setDefaultOfficials(temp)
+//     }
+//   }, [hierarchy, session]);
 
 	return (
 		<>
 		<div className="w-full p-7 bg-white flex justify-center text-center items-center px-10">
           <span className="lg:text-2xl text-xl font-bold pl-5 font-inter">
-					{hierarchy === 'None' ? "" : hierarchy } EXECUTIVES RECORD
-					</span>
+			EXECUTIVES RECORD
+		  </span>
 		</div>
 			<table className="w-full border-separate border-spacing-y-3 pt-7 lg:max-w-screen-lg px-4 max-w-screen-md mx-auto space-y-7">
 				<thead className="lg:w-full  lg:flex">
@@ -49,18 +36,7 @@ const HomePage = () => {
 						<td className=" text-sm ">More</td>
 					</tr>
 				</thead>
-					{
-							(hierarchy === 'None') && <FacultyAndDepartmentExecutive  defaultOfficials={defaultOfficials} loading={facultyDepartmentPresidentLoading || sessionFacultyDepartmentPresidentLoading} />
-					}
-
-					{
-						(hierarchy === 'FACULTY') && <FacultyExecutives session={session} hierarchy={hierarchy}/>
-					}
-
-					{
-						(hierarchy === 'DEPARTMENT') && <DepartmentExecutive session={session} hierarchy={hierarchy} />
-					}
-
+					<FacultyExecutives session={session}/>
 			</table>
 		</>
 	)

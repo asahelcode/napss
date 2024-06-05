@@ -7,10 +7,9 @@ import Skeleton from '@mui/material/Skeleton';
 
 interface FacultyExecutivesProp {
 	session: string
-	hierarchy: string
 }
 
-const FacultyExecutives = ({ session, hierarchy }: FacultyExecutivesProp ) => {
+const FacultyExecutives = ({ session }: FacultyExecutivesProp ) => {
 	const [facultyOfficials, setFacultyOfficials] = useState<any>()
 
 	const { data: facultyPresidentAndVicePresident, loading: facultyPresidentAndVicePresidentLoading } = useQuery(FACULTY_PRESIDENT_AND_VICE_PRESIDENTS)
@@ -24,14 +23,14 @@ const FacultyExecutives = ({ session, hierarchy }: FacultyExecutivesProp ) => {
 
 	// console.log(facultyPresidentAndVicePresident?.sessions)
 		useEffect(() => {
-		if( hierarchy === 'FACULTY' && session === '') {
+		if(session === '') {
 			setFacultyOfficials(facultyPresidentAndVicePresident?.sessions)
-		}else if(session !== '' && hierarchy === 'FACULTY') {
+		}else if(session !== '') {
 			const temp = []
 			temp.push(facultyPresidentAndVicePresidentFilter?.session)
 			setFacultyOfficials(temp)
 		}
-	}, [hierarchy, session, facultyPresidentAndVicePresident?.sessions, facultyPresidentAndVicePresidentFilter?.session])
+	}, [session, facultyPresidentAndVicePresident?.sessions, facultyPresidentAndVicePresidentFilter?.session])
 
 	// console.log(facultyOfficials)
 	return (facultyPresidentAndVicePresidentLoading ||  facultyPresidentAndVicePresidentFilterLoading) ? (

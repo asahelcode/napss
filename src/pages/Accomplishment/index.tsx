@@ -1,5 +1,5 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { GET_DEPARTMENT_ACCOMPLISHMENTS, GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
+import { GET_FACULTY_ACCOMPLISHMENTS } from '@/graphql/queries/officials'
 import Slider from "react-slick";
 import { useQuery } from '@apollo/client'
 import { useFetchExecutives } from '@/store'
@@ -18,11 +18,6 @@ const Accomplishment = () => {
   const isSmallScreen = useMedia('(max-width: 600px)');
   const [accomplishments, setAccomplishments] = useState([])
 
-  const { data: departmentAccomplishment } = useQuery(GET_DEPARTMENT_ACCOMPLISHMENTS, { variables: { sessionId: session?.id, departmentId: department?.id }, onCompleted: (data: any) => {
-      if (level === 'DEPARTMENT') {
-        setAccomplishments(data?.departmentAccomplishments)
-      }
-    }})
   const { data: facultyAccomplishment } = useQuery(GET_FACULTY_ACCOMPLISHMENTS, { variables: { sessionId: session?.id },  onCompleted: (data: any) => {
       if (level === 'FACULTY') {
         setAccomplishments(data?.facultyAccomplishments)
@@ -31,7 +26,7 @@ const Accomplishment = () => {
   const [description, setDescription] = useState('')
   const navigate = useNavigate()
 
-  console.log(departmentAccomplishment, facultyAccomplishment)
+  console.log(facultyAccomplishment)
   const settings = {
     dots: true,
     autoplay: true,

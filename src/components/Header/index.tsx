@@ -129,16 +129,7 @@ const Header = () => {
           </div>
         </div>
         <div className="lg:flex space-x-10 hidden">
-          <Select onValueChange={setHierarchy} value={hierarchy}>
-             <SelectTrigger className="w-[180px]">
-               <SelectValue placeholder="None" />
-             </SelectTrigger>
-             <SelectContent>
-               <SelectItem value="None">None</SelectItem>
-               <SelectItem value="DEPARTMENT">Department</SelectItem>
-               <SelectItem value="FACULTY">Faculty</SelectItem>
-             </SelectContent>
-          </Select>
+      
           <Select value={session} onValueChange={setSession}>
              <SelectTrigger className="w-[180px]">
                <SelectValue placeholder="Session" />
