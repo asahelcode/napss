@@ -19,7 +19,7 @@ const FacultyExecutives = ({ session }: FacultyExecutivesProp ) => {
 		}
 	})
   
-
+	console.log(facultyPresidentAndVicePresident)
 
 	// console.log(facultyPresidentAndVicePresident?.sessions)
 		useEffect(() => {
@@ -43,9 +43,13 @@ const FacultyExecutives = ({ session }: FacultyExecutivesProp ) => {
 	) : facultyOfficials?.map((session: any) => {
 								return (
 									<>
-										<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl">
-										<FacultyPresidentAndVicePresident president={session?.president} vicePresident={session?.vicePresident} session={session}/>
-										</tbody>
+									{
+										(session?.president && session?.vicePresident) && (
+											<tbody className="w-full bg-white flex p-5 py-8 flex-col space-y-5 relative rounded-xl">
+												<FacultyPresidentAndVicePresident president={session?.president} vicePresident={session?.vicePresident} session={session}/>
+											</tbody>
+										)
+									}
 									</>
 								)
 						})
