@@ -6,8 +6,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 
 const client = new ApolloClient({
-  // uri: 'https://napss-server.onrender.com/graphql',
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://napss-server.onrender.com/graphql',
+  // uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache()
 })
 ReactDOM.createRoot(document.getElementById('root')!).render(
