@@ -1,14 +1,8 @@
 import { useFilter, } from '@/store';
 import FacultyExecutives from '@/components/FacultyExecutives'
-import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react'
 
 const HomePage = () => {
-	const hierarchy = useFilter((state: any) => state.hierarchy)
 	const session = useFilter((state: any) => state.session)
-
-	const [defaultOfficials, setDefaultOfficials] = useState<any>([])
-
 // 	useEffect(() => {
 // 		if (hierarchy === 'None' && session === '') {
 //       setDefaultOfficials(facultyDepartmentPresident?.sessions)

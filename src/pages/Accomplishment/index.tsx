@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 
 const Accomplishment = () => {
   const session = useFetchExecutives((state: any) => state.session)
-  const department = useFetchExecutives((state: any) => state.department)
+  // const department = useFetchExecutives((state: any) => state.department)
   const level = useFetchExecutives((state: any) => state.level)
   const label = useFetchExecutives((state: any) => state.label)
   const isSmallScreen = useMedia('(max-width: 600px)');

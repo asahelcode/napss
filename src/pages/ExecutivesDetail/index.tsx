@@ -19,7 +19,7 @@ const ExecutiveDetail = () => {
   const session = useFetchExecutives((state: any) => state.session)
   const level = useFetchExecutives((state: any) => state.level)
   const label = useFetchExecutives((state: any) => state.label)
-  const department = useFetchExecutives((state: any) => state.department)
+  // const department = useFetchExecutives((state: any) => state.department)
   const [executives, setExecutives] = useState<any>({
     president: {},
     vicePresident: {},
